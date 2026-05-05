@@ -29,6 +29,9 @@
     }
 
     async function runIntro() {
+        document.documentElement.style.overflow = 'hidden'; // блокируем html
+        document.body.style.overflow = 'hidden'; // блокируем body
+        document.body.style.overflowX = 'visible';
         const overlay = buildOverlay();
         const cardMid = overlay.querySelector('.intro-card--mid');
         const cardRight = overlay.querySelector('.intro-card--right');

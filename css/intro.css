@@ -207,30 +207,29 @@
 @media (max-width: 768px) {
     .intro-overlay {
         overflow: hidden;
-        /* обрезаем всё что вылезает */
     }
     .intro-cards {
-        /* убираем flex-direction: column — он ломает absolute позиционирование */
         position: relative;
-        width: 300px;
+        width: 100%;
+        height: 260px;
+        flex-shrink: 0;
     }
     .intro-card--left,
     .intro-card--right {
         display: none;
     }
     .intro-card--mid {
-        width: 200px;
-        height: 200px;
-        /* position: absolute уже есть в базовом стиле */
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%) scaleY(0);
+        width: 180px;
+        height: 240px;
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        transform: scaleY(0) !important;
         transform-origin: bottom center;
     }
-    /* is-in нужно переопределить, чтобы translateY(-50%) сохранился */
     .intro-card--mid.is-in {
         opacity: 1;
-        transform: translateX(-50%) translateY(-50%) scaleY(1);
+        transform: scaleY(1) !important;
         transition: opacity 0.3s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 }
