@@ -106,7 +106,7 @@
 }
 
 .intro-line__inner {
-    height: 1px;
+    height: 4px;
     background: rgba(255, 255, 255, 0.55);
     width: 100%;
     max-width: 100%;
@@ -220,10 +220,10 @@
         display: none;
     }
     .intro-card--mid {
-        width: 100%;
-        max-width: 500px;
+        width: 100vw;
+        /* max-width: 500px; */
         /* ограничил, чтобы не была огромной */
-        height: 60svh;
+        height: 70svh;
         /* адекватная высота */
         top: 50%;
         transform: translate(-50%, -50%) scaleY(0);
@@ -232,10 +232,10 @@
         transform: translate(-50%, -50%) scaleY(1);
     }
     .intro-line {
-        transform: translateY(-60px);
+        transform: translateY(-40px);
     }
     .intro-line__inner {
+        height: 2px;
         width: 100%;
-        /* линия строго по ширине картинки */
     }
 }
