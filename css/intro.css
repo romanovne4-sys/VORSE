@@ -152,9 +152,9 @@
 
 /* --- меню и лого --- */
 
-.logo,
-.menu,
-.burger {
+header.logo,
+header.menu,
+header.burger {
     opacity: 0;
     transform: translateY(-10px);
     transition: none;
@@ -231,11 +231,11 @@
     .intro-card--mid.is-in {
         transform: translate(-50%, -50%) scaleY(1);
     }
-    .intro-line {
+    /* .intro-line {
         transform: translateY(-40px);
     }
     .intro-line__inner {
         height: 2px;
         width: 100%;
-    }
+    } */
 }
