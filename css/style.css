@@ -1,0 +1,1311 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    font-family: inherit;
+    color: inherit;
+    width: 100%;
+}
+
+.input {
+    font-family: inherit;
+    color: inherit;
+}
+
+.input::placeholder {
+    font-family: inherit;
+    color: inherit;
+}
+
+body {
+    background-color: #000;
+    font-family: "Lato", sans-serif;
+    /* font-family: "Exo 2", sans-serif; */
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    overflow-x: hidden;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1756px;
+    margin: 0 auto;
+    padding: 0 clamp(12px, 1.7vw, 30px);
+}
+
+.header {
+    background-image: url(../images/hero-bg.jpg);
+    /*заглушка в случаем если чей то браузер не поддерживает image-set */
+    /* background-image: image-set( url('../images/hero-bg.avif') type('image/avif'), url('../images/hero-bg.webp') type('image/webp'), url('../images/header-bg.jpg') type('image/jpeg')); */
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    margin-bottom: clamp(60px, 11vw, 193px);
+}
+
+.header__content {
+    padding-bottom: clamp(24px, 4.3vw, 75px);
+}
+
+.header__top {
+    padding-top: clamp(18px, 3.5vw, 61px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo__main {
+    font-family: "Exo 2", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.logo__sub {
+    font-family: "Exo 2", sans-serif;
+    font-size: 12px;
+    line-height: 1.1;
+    color: #fff;
+    opacity: 0.8;
+}
+
+
+/* menu */
+
+.menu__list {
+    display: flex;
+    gap: clamp(28px, 4vw, 70px);
+}
+
+.menu__link {
+    font-weight: 700;
+    font-size: clamp(10px, 1vw, 18px);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #fff;
+    position: relative;
+    transition: text-shadow 0.3s;
+}
+
+
+/* .menu__link:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+} */
+
+
+/* варик подчеркивания что на макете */
+
+.menu__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+    width: 100%;
+    height: 1.2px;
+    background-color: #fff;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.menu__link:hover::after {
+    opacity: 1;
+}
+
+
+/* header title */
+
+.burger {
+    display: none;
+}
+
+
+/* заголовок хиро */
+
+.header__title {
+    font-size: clamp(104px, 19vw, 349px);
+    font-weight: 400;
+    line-height: 0.9;
+}
+
+.header__title-1 {
+    margin-left: -0.07em;
+    display: block;
+}
+
+.header__title-2 {
+    /* background: linear-gradient(#CACACA, #5B5B5B); */
+    background: linear-gradient( to top, rgba(202, 202, 202, 0.9), rgba(91, 91, 91, 0.4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: clamp(10px, 20vw, 367px);
+    display: block;
+    margin-bottom: clamp(25px, 2.6vw, 60px);
+}
+
+.header__hero {
+    /* position: relative; */
+}
+
+.header__desc {
+    /* position: absolute;
+    left: clamp(40px, 20.1vw, 314px);
+    bottom: clamp(24px, 6.6vw, 117px); */
+    margin-left: clamp(10px, 20vw, 367px);
+    line-height: 1.5;
+}
+
+.header__desc-text {
+    font-size: clamp(14px, 1.3vw, 24px);
+}
+
+.btn {
+    line-height: 1.2;
+    padding: clamp(15px, 1.8vw, 32px) clamp(20px, 3vw, 55px);
+    margin-top: clamp(20px, 2.7vw, 47px);
+    font-size: clamp(12px, 1vw, 24px);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.02em;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: clamp(1px, 0.1vw, 2px) solid #fff;
+    border-radius: 50px;
+    transition: background-color 0.4s, color 0.4s;
+    width: fit-content;
+}
+
+.btn:hover {
+    background-color: #fff;
+    color: #000;
+    opacity: 0.8;
+}
+
+
+/* residences section (1) */
+
+.section__box {
+    margin-bottom: clamp(60px, 11vw, 193px);
+}
+
+.residences__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(12px, 1.7vw, 30px);
+}
+
+.section__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(12px, 1.7vw, 30px);
+    margin-bottom: clamp(60px, 9vw, 160px);
+}
+
+.section__number {
+    font-size: clamp(40px, 8vw, 150px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.62;
+    letter-spacing: 0.02em;
+    opacity: 0.2;
+    display: block;
+    margin-bottom: clamp(12px, 1.5vw, 27px);
+}
+
+.section__title {
+    font-size: clamp(40px, 8vw, 150px);
+    font-weight: 400;
+    line-height: 0.62;
+    letter-spacing: 0.02em;
+}
+
+
+/* делаем сетку */
+
+.residences__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(20px, 4vw, 85px);
+    margin-top: clamp(-80px, -3.7vw, -48px);
+}
+
+.card__first {
+    grid-row: span 2;
+    min-height: clamp(400px, 56vw, 982px);
+    margin-top: clamp(80px, 23vw, 420px);
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* картинка занимает всю область карточки 
+с сохранением пропорций */
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* позыционируем конетент относительно card и смещаем весь контент вниз */
+
+.card__content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: clamp(16px, 2.5vw, 44px) clamp(16px, 3.4vw, 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient( to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+}
+
+
+/* а теперь лейбл возвращаем наверх */
+
+.card__label {
+    font-size: clamp(10px, 1.5vw, 27px);
+    letter-spacing: 1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: auto;
+    color: #000;
+}
+
+.card h3 {
+    font-size: clamp(20px, 2.6vw, 46px);
+    margin-bottom: clamp(10px, 1.4vw, 19px);
+    font-weight: 400;
+}
+
+.card__meta {
+    font-size: clamp(14px, 1.6vw, 18px);
+}
+
+.card__meta-opacity-50 {
+    opacity: 0.5;
+}
+
+.card__meta-opacity-80 {
+    opacity: 0.8;
+}
+
+.card__location {
+    font-weight: 400;
+    display: inline-block;
+    margin-top: clamp(10px, 1.4vw, 19px);
+}
+
+.card__price {
+    position: absolute;
+    right: clamp(18px, 2.5vw, 44px);
+    font-size: clamp(13px, 1.4vw, 18px);
+    font-weight: 300;
+}
+
+.card__price-opacity-80 {
+    opacity: 0.8;
+}
+
+
+/* ховер для карточки, только для устройств поддерживающих hover */
+
+@media (hover: hover) and (pointer: fine) {
+    .card img {
+        transition: transform 0.9s ease;
+    }
+    .card:hover img {
+        transform: scale(1.05);
+    }
+}
+
+.card__content {
+    transition: background 0.4s ease;
+}
+
+.card:hover .card__content {
+    background: linear-gradient( to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.2));
+}
+
+
+/* Explore section (2)*/
+
+.prop-list {
+    position: relative;
+    /* z-index: 2; */
+}
+
+.prop-item {
+    display: flex;
+    align-items: center;
+    gap: clamp(50px, 17vw, 240px);
+    padding: clamp(40px, 5vw, 120px) 0 clamp(24px, 2.5vw, 70px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.prop-item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.prop-num {
+    font-size: clamp(15px, 1.2vw, 24px);
+    color: rgba(255, 255, 255, 0.25);
+    font-weight: 400;
+}
+
+.prop-text {
+    font-size: clamp(30px, 5.9vw, 104px);
+    font-weight: 400;
+    color: #404040;
+    flex: 1;
+    transition: transform 0.4s ease, color 0.3s ease;
+}
+
+.see-more {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.2vw, 22px);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.see-more span {
+    font-size: clamp(15px, 1.4vw, 24px);
+    font-weight: 400;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.see-more svg {
+    width: clamp(60px, 8.4vw, 149px);
+    height: clamp(15px, 1.4vw, 24px);
+    stroke: #fff;
+}
+
+.prop-list--hovered .prop-item {
+    opacity: 0.4;
+}
+
+.prop-list--hovered .prop-item--hovered {
+    opacity: 1;
+    border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+.prop-item--hovered .prop-text {
+    color: #fff;
+    transform: scale(1.08);
+}
+
+.prop-item--hovered .see-more {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* для устройств поддерживающих hover */
+
+.prop-preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    will-change: transform;
+}
+
+
+/* адаптация для тач устройств */
+
+@media (hover: none) and (pointer: coarse) {
+    .prop-preview {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.prop-preview__inner {
+    width: clamp(120px, 16vw, 288px);
+    height: clamp(300px, 38vw, 676px);
+}
+
+.prop-preview__inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* display: block; */
+}
+
+
+/* section story (3)*/
+
+.story__video {
+    background: url(../images/story-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: clamp(350px, 45vw, 804px);
+    margin-bottom: clamp(40px, 7vw, 125px);
+}
+
+.story__inner {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.story__desc {
+    max-width: clamp(150px, 17.5vw, 310px);
+    display: inline-block;
+}
+
+
+/* section press (4) */
+
+
+/* line */
+
+.line {
+    border-top: 2px solid #D9D9D9;
+    border-bottom: 2px solid #D9D9D9;
+    overflow: hidden;
+    padding: clamp(40px, 6.2vw, 110px) 0 clamp(40px, 6.2vw, 110px);
+}
+
+.line__item {
+    margin-right: clamp(40px, 5.3vw, 94px);
+}
+
+.line__item svg {
+    height: clamp(25px, 3vw, 54px);
+    /* единый размер для всех */
+    width: auto;
+    display: block;
+}
+
+.line__dot {
+    margin-right: clamp(40px, 5.3vw, 94px);
+}
+
+.line__track {
+    display: flex;
+    width: max-content;
+    animation: line-scroll 35s linear infinite;
+    will-change: transform;
+}
+
+.line__group {
+    display: flex;
+    align-items: center;
+}
+
+.line__dot {
+    width: clamp(8px, 0.7vw, 15px);
+    height: clamp(8px, 0.7vw, 15px);
+    border-radius: 50%;
+    background: #fff;
+}
+
+@keyframes line-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+
+/* cards */
+
+.cards {
+    overflow: hidden;
+    border-bottom: 2px solid #fff;
+}
+
+.cards__scroll {
+    display: flex;
+    width: max-content;
+}
+
+.card__scroll {
+    width: 50vw;
+    border-right: 2px solid #fff;
+    padding: clamp(35px, 4.7vw, 84px) clamp(30px, 4.4vw, 79px) clamp(35px, 4.7vw, 84px);
+    height: clamp(300px, 45vw, 965px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: background 0.3s ease;
+}
+
+.card__scroll:first-child {
+    /* border-right: none; */
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.card__source {
+    font-size: 16px;
+    color: #fff;
+    opacity: 0.25;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.card__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.card__title {
+    font-size: clamp(45px, 5.9vw, 104px);
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: clamp(25px, 2.8vw, 50px);
+}
+
+.card__desc {
+    font-size: clamp(14px, 1.3vw, 24px);
+    font-weight: 600;
+    color: #fff;
+    opacity: 0.5;
+}
+
+.card__date {
+    font-size: 16px;
+    color: #fff;
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+}
+
+
+/* contact */
+
+.contact {
+    width: 100%;
+    background: #E8E8E8;
+    padding: clamp(40px, 4vw, 73px) 15px clamp(120px, 13.7vw, 241px);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact__title {
+    font-size: clamp(64px, 9vw, 130px);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    color: #000;
+    margin-bottom: 64px;
+}
+
+.contact__number {
+    color: #000;
+    font-size: clamp(40px, 8vw, 150px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.62;
+    letter-spacing: 0.02em;
+    opacity: 0.25;
+    display: block;
+    margin-bottom: clamp(12px, 1.5vw, 27px);
+}
+
+
+/* черные края */
+
+.contact::before,
+.contact::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1vw;
+    background: #000;
+    z-index: 0;
+}
+
+.contact::before {
+    left: 0;
+}
+
+.contact::after {
+    right: 0;
+}
+
+.contact__inner {
+    padding-right: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr clamp(40px, 5vw, 90px);
+    gap: clamp(40px, 15vw, 280px);
+    align-items: start;
+}
+
+
+/* left */
+
+.contact__left {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 5.6vw, 100px);
+    padding-top: 4px;
+}
+
+.contact__info-block {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3px, 0.4vw, 7px);
+}
+
+.contact__info-label {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    letter-spacing: 0.04em;
+}
+
+.contact__info-value {
+    font-size: 16px;
+    color: #000;
+}
+
+.contact__info-value-addess {
+    font-size: 16px;
+    color: #000;
+    text-transform: uppercase;
+    font-style: normal;
+}
+
+.contact__socials {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3.3vw, 58px);
+    margin-top: clamp(7px, 0.9vw, 16px);
+}
+
+.contact__social {
+    position: relative;
+    display: inline-block;
+    font-size: clamp(22px, 2.6vw, 46px);
+    font-weight: 400;
+    color: #000;
+    opacity: 0.7;
+    width: fit-content;
+    transition: all 0.3s ease;
+}
+
+.contact__social::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    opacity: 0;
+    width: 100%;
+    height: 2px;
+    background: #000;
+}
+
+.contact__social:hover {
+    opacity: 1;
+}
+
+.contact__social:hover::after {
+    opacity: 1;
+}
+
+
+/* form */
+
+.contact__form-wrap {
+    padding-top: 4px;
+}
+
+.contact__form {
+    display: flex;
+    flex-direction: column;
+    /* gap: clamp(30px, 3.8vw, 68px); */
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 4.4vw, 78px);
+    margin-bottom: clamp(25px, 3.7vw, 66px);
+}
+
+.form-row--full {
+    grid-template-columns: 1fr;
+    margin-bottom: clamp(30px, 4.5vw, 80px);
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(7px, 0.7vw, 14px);
+}
+
+.form-label {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+}
+
+.form-input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #000;
+    padding: clamp(3px, 0.4vw, 6px) 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    font-family: inherit;
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color 0.2s ease;
+    width: 100%;
+}
+
+.form-input::placeholder {
+    color: #000;
+    opacity: 0.5;
+}
+
+.form-textarea {
+    resize: none;
+    height: clamp(50px, 6.2vw, 110px);
+}
+
+
+/* чекбокс */
+
+.form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    /* авы */
+    margin-top: -20px;
+}
+
+.form-checkbox__input {
+    display: none;
+}
+
+
+/* Внешний квадрат */
+
+.form-checkbox__box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #000;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.form-checkbox__box::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    /* одинаково со всех сторон */
+    background: #000;
+}
+
+.form-checkbox__input:not(:checked)+.form-checkbox__box::after {
+    opacity: 0;
+}
+
+.form-checkbox__input:checked+.form-checkbox__box::after {
+    opacity: 1;
+}
+
+.form-checkbox__text {
+    font-size: 16px;
+    color: #000;
+}
+
+.link {
+    position: relative;
+}
+
+.link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: clamp(-2px, -0.11vw, -4px);
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+}
+
+.form-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 33px 58px; */
+    padding: clamp(15px, 1.9vw, 33px) clamp(29px, 3.3vw, 58px);
+    border: clamp(1px, 0.1vw, 2px) solid #000;
+    border-radius: 50px;
+    background: transparent;
+    font-size: clamp(12px, 1.36vw, 24px);
+    font-weight: 800;
+    color: #000;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.4s, color 0.4s;
+    width: fit-content;
+}
+
+.form-submit:hover {
+    background: #000;
+    color: #e8e6e1;
+}
+
+
+/* copy */
+
+.contact__copy span {
+    font-size: clamp(48px, 5.9vw, 104px);
+    font-weight: 400;
+    color: #000;
+    writing-mode: vertical-rl;
+    /* transform: rotate(180deg); */
+    white-space: nowrap;
+}
+
+
+/* footer */
+
+.footer {
+    padding-bottom: clamp(80px, 10.5vw, 186px);
+}
+
+.footer__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(10px, 1.1vw, 20px);
+}
+
+.footer__menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.1vw, 20px);
+}
+
+.footer__link {
+    font-size: 16px;
+    color: #fff;
+    opacity: 0.7;
+    position: relative;
+    transition: opacity 0.3s ease;
+}
+
+.footer__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    background-color: #fff;
+    height: 1px;
+    width: 100%;
+    opacity: 0.7;
+}
+
+.footer__link:hover {
+    opacity: 1;
+}
+
+
+/* <!-- для логики на секцию explore для мобильных  (bottom sheet) --> */
+
+.bottom-sheet {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.bottom-sheet__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.bottom-sheet__content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #111;
+    border-radius: 24px 24px 0 0;
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+    padding: 16px;
+}
+
+.bottom-sheet__handle {
+    width: 40px;
+    height: 4px;
+    background: #444;
+    border-radius: 999px;
+    margin: 0 auto 12px;
+}
+
+.bottom-sheet__image {
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+}
+
+.bottom-sheet__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bottom-sheet.open {
+    pointer-events: auto;
+}
+
+.bottom-sheet.open .bottom-sheet__overlay {
+    opacity: 1;
+}
+
+.bottom-sheet.open .bottom-sheet__content {
+    transform: translateY(0);
+}
+
+
+/* для планшетов (fixed preview right) */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .prop-preview {
+        position: fixed;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .prop-preview__inner {
+        width: 260px;
+        height: 420px;
+    }
+    .prop-list--hovered+.prop-preview {
+        opacity: 1;
+    }
+}
+
+
+/* Страница search */
+
+.header__search {
+    /* min-height: 89px;
+    min-height: auto; */
+}
+
+.search {
+    /* padding: clamp(36px, 9vw, 149px) clamp(3px, 3vw, 68px); */
+}
+
+.search__title {
+    font-size: 120px;
+    font-weight: 300;
+    margin-bottom: 60px;
+}
+
+
+/* карточки на странице search */
+
+.card-search {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* картинка занимает всю область карточки 
+с сохранением пропорций */
+
+.card-search img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* позыционируем конетент относительно card и смещаем весь контент вниз */
+
+.card-search__content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: clamp(16px, 2.5vw, 44px) clamp(16px, 3.4vw, 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient( to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+}
+
+.card-search h3 {
+    font-size: clamp(20px, 2.6vw, 46px);
+    margin-bottom: clamp(10px, 1.4vw, 19px);
+    font-weight: 400;
+}
+
+.card-search__meta {
+    font-size: clamp(14px, 1.6vw, 18px);
+}
+
+.card-search__meta-opacity-50 {
+    opacity: 0.5;
+}
+
+.card-search__meta-opacity-80 {
+    opacity: 0.8;
+}
+
+.card-search__location {
+    font-weight: 400;
+    display: inline-block;
+    margin-top: clamp(10px, 1.4vw, 19px);
+}
+
+.card-search__price {
+    position: absolute;
+    right: clamp(18px, 2.5vw, 44px);
+    font-size: clamp(13px, 1.4vw, 18px);
+    font-weight: 300;
+}
+
+.card-search__price-opacity-80 {
+    opacity: 0.8;
+}
+
+
+/* ховер для карточки, только для устройств поддерживающих hover */
+
+@media (hover: hover) and (pointer: fine) {
+    .card-search img {
+        transition: transform 0.9s ease;
+    }
+    .card-search:hover img {
+        transform: scale(1.05);
+    }
+}
+
+.card-search__content {
+    transition: background 0.4s ease;
+}
+
+.card-search:hover .card-search__content {
+    background: linear-gradient( to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.2));
+}
+
+.properties__inner {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(40px, 7vw, 128px);
+    margin-bottom: clamp(100px, 16vw, 290px);
+}
+
+.properties__inner-two {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: clamp(40px, 7vw, 128px);
+    margin-bottom: clamp(100px, 16vw, 290px);
+}
+
+.properties__inner-three {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(40px, 7vw, 128px);
+    margin-bottom: clamp(100px, 25vw, 380px);
+}
+
+.card-search--1 {
+    transform: translateY(100px);
+}
+
+.card-search--3 {
+    transform: translateY(100px);
+}
+
+.card-search--5 {
+    transform: translateY(100px);
+}
+
+@media (max-width: 1024px) {
+    .properties__inner {
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 40px;
+        margin-bottom: 350px;
+    }
+    .card-search--1 {
+        transform: none;
+    }
+    .card-search--2 {
+        transform: translateY(250px);
+    }
+    .properties__inner-two {
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 40px;
+        margin-bottom: 350px;
+    }
+    .card-search--3 {
+        transform: translateY(250px);
+    }
+    .properties__inner-three {
+        gap: 40px;
+        margin-bottom: 350px;
+    }
+    .card-search--6 {
+        transform: translateY(250px);
+    }
+}
+
+@media (max-width: 768px) {
+    .properties__inner {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 200px 200px;
+        gap: 40px;
+        margin-bottom: 100px;
+    }
+    .card-search__price {
+        top: 12px;
+    }
+    .card-search--1 {
+        grid-row: 1/3;
+    }
+    .card-search--2 {
+        transform: none;
+    }
+    .card-search--2 {
+        grid-row: 2/3;
+    }
+    .properties__inner-two {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 200px 200px;
+        gap: 40px;
+        margin-bottom: 100px;
+    }
+    .card-search--3 {
+        transform: none;
+        grid-row: 1/2;
+    }
+    .card-search--4 {
+        transform: none;
+        grid-row: 1/3;
+    }
+    .properties__inner-three {
+        display: none;
+    }
+}
+
+.filters {
+    display: flex;
+    gap: 75px;
+    flex-wrap: wrap;
+    margin-bottom: 87px;
+}
+
+option {
+    background-color: #111;
+    color: #fff;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.filter label {
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.filter input,
+.filter select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    /* font-size: 16px; */
+    color: #7F7F7F;
+    padding: 8px 0px;
+}
+
+.map-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    margin-top: 20px;
+    cursor: pointer;
+    width: auto;
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+}
+
+.card img {
+    width: 100%;
+    display: block;
+}

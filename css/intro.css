@@ -1,0 +1,236 @@
+/* =============================================
+   INTRO OVERLAY
+   ============================================= */
+
+.intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+}
+
+.intro-cards {
+    /* position: relative; */
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* --- карточки --- */
+
+.intro-card {
+    position: absolute;
+    overflow: hidden;
+    background: #111;
+    opacity: 0;
+    transition: none;
+}
+
+.intro-card--mid {
+    width: clamp(280px, 38vw, 580px);
+    height: clamp(340px, 55vh, 620px);
+    left: 50%;
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: bottom center;
+    z-index: 2;
+}
+
+.intro-card--right {
+    width: clamp(130px, 16vw, 240px);
+    height: clamp(300px, 50vh, 560px);
+    right: clamp(40px, 8vw, 140px);
+    transform: scaleY(0);
+    transform-origin: top center;
+    z-index: 1;
+}
+
+.intro-card--left {
+    width: clamp(130px, 16vw, 240px);
+    height: clamp(300px, 50vh, 560px);
+    left: clamp(40px, 8vw, 140px);
+    transform: scaleY(0);
+    transform-origin: bottom center;
+    z-index: 1;
+}
+
+.intro-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* вырастают плавно */
+
+.intro-card--mid.is-in {
+    opacity: 1;
+    transform: translateX(-50%) scaleY(1);
+    transition: opacity 0.3s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.intro-card--right.is-in,
+.intro-card--left.is-in {
+    opacity: 1;
+    transform: scaleY(1);
+    transition: opacity 0.3s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* исчезают вместе с полоской — fade */
+
+.intro-card.is-out {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+
+/* --- полоска --- */
+
+.intro-line {
+    width: 100%;
+    padding: 0 clamp(40px, 8vw, 140px);
+    box-sizing: border-box;
+    margin-bottom: clamp(24px, 5vh, 56px);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.intro-line__inner {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.55);
+    width: 0%;
+    transition: none;
+}
+
+.intro-line__inner.is-growing {
+    width: 100%;
+    transition: width 2s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.intro-line__inner.is-out {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+
+/* оверлей уходит */
+
+.intro-overlay.is-done {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+
+/* =============================================
+   HEADER — начальные скрытые состояния
+   ============================================= */
+
+.header.header--zoomed {
+    transform: scale(1.1);
+    transform-origin: center center;
+    transition: none;
+}
+
+.header.header--unzoom {
+    transform: scale(1);
+    transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* лого + меню */
+
+.header .logo,
+.header .menu,
+.header .burger {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: none;
+}
+
+.logo.is-visible,
+.menu.is-visible,
+.burger.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* тайтл — opacity + лёгкий сдвиг справа */
+
+.header__title-1,
+.header__title-2 {
+    opacity: 0;
+    transform: translateX(50px);
+    display: block;
+    transition: none;
+}
+
+.header__title-1.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header__title-2.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 1s ease 0.25s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+}
+
+
+/* описание + кнопка */
+
+.header__desc {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: none;
+}
+
+.header__desc.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+@media (max-width: 768px) {
+    .intro-overlay {
+        overflow: hidden;
+        /* обрезаем всё что вылезает */
+    }
+    .intro-cards {
+        /* убираем flex-direction: column — он ломает absolute позиционирование */
+        position: relative;
+        width: 300px;
+    }
+    .intro-card--left,
+    .intro-card--right {
+        display: none;
+    }
+    .intro-card--mid {
+        width: 200px;
+        height: 200px;
+        /* position: absolute уже есть в базовом стиле */
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%) scaleY(0);
+        transform-origin: bottom center;
+    }
+    /* is-in нужно переопределить, чтобы translateY(-50%) сохранился */
+    .intro-card--mid.is-in {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%) scaleY(1);
+        transition: opacity 0.3s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+}
