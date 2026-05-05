@@ -29,9 +29,6 @@
     }
 
     async function runIntro() {
-        document.documentElement.style.overflow = 'hidden'; // блокируем html
-        document.body.style.overflow = 'hidden'; // блокируем body
-        document.body.style.overflowX = 'visible';
         const overlay = buildOverlay();
         const cardMid = overlay.querySelector('.intro-card--mid');
         const cardRight = overlay.querySelector('.intro-card--right');
@@ -45,6 +42,11 @@
         const title1 = document.querySelector('.header__title-1');
         const title2 = document.querySelector('.header__title-2');
         const desc = document.querySelector('.header__desc');
+
+        /* Блокируем скролл. overflowX: visible убирает баг с position: fixed на мобильных */
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        document.body.style.overflowX = 'visible';
 
         /* хедер сразу zoom */
         if (header) header.classList.add('header--zoomed');
@@ -77,6 +79,12 @@
         line.classList.add('is-out');
 
         await delay(550);
+
+        /* восстанавливаем скролл ДО того как оверлей исчезает —
+           оверлей ещё перекрывает страницу, поэтому скачка не будет */
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.body.style.overflowX = '';
 
         /* оверлей уходит, хедер начинает zoom-out */
         overlay.classList.add('is-done');
