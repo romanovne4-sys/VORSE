@@ -341,8 +341,21 @@ body.no-scroll {
 }
 
 .card__price {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     position: absolute;
     right: clamp(18px, 2.5vw, 44px);
+    font-size: clamp(13px, 1.4vw, 18px);
+    font-weight: 300;
+}
+
+.card__price-search {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: absolute;
+    top: clamp(18px, 2.5vw, 44px);
     font-size: clamp(13px, 1.4vw, 18px);
     font-weight: 300;
 }
@@ -1242,7 +1255,6 @@ option {
         display: grid;
         grid-template-columns: 0.8fr 1.2fr;
         gap: 60px 38px;
-        /* margin-bottom: 242px; */
     }
     .filter:last-child {
         max-width: 367px;
