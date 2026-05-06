@@ -1,5 +1,6 @@
 html {
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 *,
@@ -356,11 +357,12 @@ body.no-scroll {
     gap: 8px;
     position: absolute;
     top: clamp(18px, 2.5vw, 44px);
-    font-size: clamp(13px, 1.4vw, 18px);
+    font-size: 22px;
     font-weight: 300;
 }
 
 .card__price-opacity-80 {
+    font-size: 18px;
     opacity: 0.8;
 }
 
@@ -1186,10 +1188,14 @@ option {
     margin-top: clamp(10px, 1.4vw, 19px);
 }
 
-.card-search__price {
+.card__price-search {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     position: absolute;
     right: clamp(18px, 2.5vw, 44px);
-    font-size: clamp(13px, 1.4vw, 18px);
+    top: clamp(18px, 2.5vw, 44px);
+    /* font-size: clamp(13px, 1.4vw, 18px); */
     font-weight: 300;
 }
 
