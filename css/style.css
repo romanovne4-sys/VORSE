@@ -644,7 +644,7 @@ body.no-scroll {
     width: 100%;
     background: #E8E8E8;
     padding: clamp(40px, 4vw, 73px) 15px clamp(120px, 13.7vw, 241px);
-    position: relative;
+    /* position: relative; */
     overflow: hidden;
 }
 
@@ -680,7 +680,7 @@ body.no-scroll {
     bottom: 0;
     width: 1vw;
     background: #000;
-    z-index: 0;
+    /* z-index: 0; */
 }
 
 .contact::before {
