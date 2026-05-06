@@ -363,17 +363,16 @@
     .filters__map {
         display: none;
     }
-    .page__title {
-        margin-bottom: auto;
-    }
-    .map-btn {
-        margin-top: auto;
-        padding-left: 11px;
-    }
     .header__map {
         height: 100px;
     }
     .header__search {
         height: 100px;
+    }
+    .properties__inner {
+        margin-top: 72px;
+    }
+    .map-btn {
+        margin-top: 29px;
     }
 }
