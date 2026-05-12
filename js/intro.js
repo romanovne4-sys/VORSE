@@ -47,14 +47,17 @@
         const title2 = document.querySelector('.header__title-2');
         const desc = document.querySelector('.header__desc');
 
-        // ─── ФИКС горизонтального скролла на мобильных ───────────────────
-        // overflow-x: hidden на body ломает position: fixed на мобильных,
-        // создавая новый containing block. Блокируем только вертикальный
-        // скролл через overflow: hidden на html, а body оставляем visible.
+        // Блокируем скролл
         document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'visible'; // НЕ hidden — иначе fixed уезжает
-        document.body.style.overflowX = 'hidden'; // только горизонталь для страховки
-        // ─────────────────────────────────────────────────────────────────
+        document.body.style.overflow = 'hidden';
+
+        // КЛЮЧЕВОЙ ФИКС: gsap.set(header, { scale: 2.1 }) расширяет
+        // документ до ~210vw, создавая горизонтальный скролл на мобильных.
+        // clip-path: inset(0) обрезает всё что вылезает за границы элемента
+        // не влияя на layout — браузер не учитывает overflow от transform.
+        if (header) {
+            header.style.clipPath = 'inset(0)';
+        }
 
         // =========================
         // INIT STATE — карточки
@@ -131,67 +134,18 @@
 
         const tl = gsap.timeline();
 
-        // ── MID появляется + линия до 30% ────────────────
-        tl.to(mid, {
-            opacity: 1,
-            scaleY: 1,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '+=0.3');
+        tl.to(mid, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.3');
+        tl.to(midImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
+        tl.to(line, { scaleX: 0.3, duration: 0.5, ease: 'power2.out' }, '<+0.2');
 
-        tl.to(midImg, {
-            scale: 1,
-            duration: 1.6,
-            ease: 'power3.out'
-        }, '<');
+        tl.to(right, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.3');
+        tl.to(rightImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
+        tl.to(line, { scaleX: 0.65, duration: 0.5, ease: 'power2.out' }, '<+0.2');
 
-        tl.to(line, {
-            scaleX: 0.3,
-            duration: 0.5,
-            ease: 'power2.out'
-        }, '<+0.2');
+        tl.to(left, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.5');
+        tl.to(leftImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
+        tl.to(line, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, '<+0.2');
 
-        // ── RIGHT появляется + линия до 65% ──────────────
-        tl.to(right, {
-            opacity: 1,
-            scaleY: 1,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '+=0.3');
-
-        tl.to(rightImg, {
-            scale: 1,
-            duration: 1.6,
-            ease: 'power3.out'
-        }, '<');
-
-        tl.to(line, {
-            scaleX: 0.65,
-            duration: 0.5,
-            ease: 'power2.out'
-        }, '<+0.2');
-
-        // ── LEFT появляется + линия до 100% ──────────────
-        tl.to(left, {
-            opacity: 1,
-            scaleY: 1,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '+=0.5');
-
-        tl.to(leftImg, {
-            scale: 1,
-            duration: 1.6,
-            ease: 'power3.out'
-        }, '<');
-
-        tl.to(line, {
-            scaleX: 1,
-            duration: 0.4,
-            ease: 'power2.out'
-        }, '<+0.2');
-
-        // ── ВЫХОД — карточки и линия ──────────────────────
         tl.to([mid, left, right, line], {
             opacity: 0,
             scaleY: 0,
@@ -199,18 +153,12 @@
             ease: 'power2.in'
         }, '+=0.6');
 
-        // ─── ВОССТАНАВЛИВАЕМ СКРОЛЛ до fade-out оверлея ──────────────────
-        // Оверлей ещё перекрывает страницу чёрным — скачка не будет.
-        // Восстанавливаем именно здесь, чтобы position: fixed на странице
-        // снова работал корректно к моменту появления UI.
+        // Восстанавливаем скролл пока оверлей ещё чёрный — скачка не будет
         tl.call(() => {
             document.documentElement.style.overflow = '';
             document.body.style.overflow = '';
-            document.body.style.overflowX = '';
         });
-        // ─────────────────────────────────────────────────────────────────
 
-        // ── ОВЕРЛЕЙ исчезает ──────────────────────────────
         tl.to(overlay, {
             opacity: 0,
             duration: 0.5,
@@ -219,16 +167,18 @@
             }
         }, '-=0.1');
 
-        // ── HEADER разворачивается ────────────────────────
         if (header) {
             tl.to(header, {
                 scale: 1,
                 duration: 1.8,
-                ease: 'power3.out'
+                ease: 'power3.out',
+                onComplete: () => {
+                    // Снимаем clip только когда scale уже вернулся к 1
+                    header.style.clipPath = '';
+                }
             }, '-=0.3');
         }
 
-        // ── UI появляется ─────────────────────────────────
         tl.to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=1.5');
         tl.to(menu, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<+0.1');
         tl.to(burger, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<');
