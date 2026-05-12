@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const imgUrls = {
-        Lofts: './images/explore-img-1.webp',
-        Penthouses: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',
-        Villas: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',
-        Mansions: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',
-        Estates: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80'
+        Lofts: './images/lofts.jpg',
+        Penthouses: './images/penthouse.jpg',
+        Villas: './images/villa.jpg',
+        Mansions: './images/mansions.jpg',
+        Estates: './images/estate.jpg',
     };
 
     const list = document.getElementById('propList');
@@ -253,3 +253,210 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+
+//update may 9
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cursor = document.querySelector('.cursor');
+    const trail = document.querySelector('.cursor-trail');
+    if (!cursor || !trail) return;
+    let mouseX = 0,
+        mouseY = 0;
+    let cursorX = 0,
+        cursorY = 0;
+    let trailX = 0,
+        trailY = 0;
+    const cursorSpeed = 0.18;
+    const trailSpeed = 0.08;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    const storyWrap = document.querySelector('.story__video-wrap');
+    const storyVideo = document.querySelector('.story__video');
+    let initialHeight = 0;
+    let wrapStart = 0;
+    let animDistance = 0;
+    let zoomDistance = 0;
+
+    if (storyWrap && storyVideo) {
+        initialHeight = storyVideo.offsetHeight;
+        wrapStart = storyWrap.offsetTop;
+        animDistance = (storyWrap.offsetHeight - window.innerHeight) * 0.5;
+        zoomDistance = (storyWrap.offsetHeight - window.innerHeight) * 0.5;
+    }
+
+    function updateStory() {
+        if (!storyWrap || !storyVideo) return;
+        const scrollY = window.scrollY;
+
+        if (scrollY < wrapStart) {
+            storyVideo.style.position = 'absolute';
+            storyVideo.style.top = '0';
+            storyVideo.style.bottom = '';
+            storyVideo.style.left = '0';
+            storyVideo.style.width = '100%';
+            storyVideo.style.height = initialHeight + 'px';
+            storyVideo.style.backgroundSize = 'cover';
+
+        } else if (scrollY >= wrapStart && scrollY <= wrapStart + animDistance) {
+            const progress = (scrollY - wrapStart) / animDistance;
+            const newHeight = initialHeight + (window.innerHeight - initialHeight) * progress;
+
+            storyVideo.style.position = 'fixed';
+            storyVideo.style.top = '0';
+            storyVideo.style.bottom = '';
+            storyVideo.style.left = '0';
+            storyVideo.style.width = '100%';
+            storyVideo.style.height = newHeight + 'px';
+            storyVideo.style.backgroundSize = 'cover';
+
+        } else if (scrollY > wrapStart + animDistance && scrollY <= wrapStart + animDistance + zoomDistance) {
+            const zoomProgress = (scrollY - wrapStart - animDistance) / zoomDistance;
+            const scale = 100 + zoomProgress * 15;
+
+            storyVideo.style.position = 'fixed';
+            storyVideo.style.top = '0';
+            storyVideo.style.bottom = '';
+            storyVideo.style.left = '0';
+            storyVideo.style.width = '100%';
+            storyVideo.style.height = window.innerHeight + 'px';
+            storyVideo.style.backgroundSize = scale + '%';
+
+        } else {
+            const wrapHeight = storyWrap.offsetHeight;
+            storyVideo.style.position = 'absolute';
+            storyVideo.style.top = (wrapHeight - window.innerHeight) + 'px';
+            storyVideo.style.bottom = '';
+            storyVideo.style.left = '0';
+            storyVideo.style.width = '100%';
+            storyVideo.style.height = window.innerHeight + 'px';
+            storyVideo.style.backgroundSize = '115%';
+        }
+    }
+
+    function animate() {
+        cursorX += (mouseX - cursorX) * cursorSpeed;
+        cursorY += (mouseY - cursorY) * cursorSpeed;
+        trailX += (mouseX - trailX) * trailSpeed;
+        trailY += (mouseY - trailY) * trailSpeed;
+        cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+        trail.style.transform = `translate(${trailX}px, ${trailY}px) translate(-50%, -50%)`;
+        updateStory();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    const interactive = document.querySelectorAll('a, button, .cards__link, li, input, .form-checkbox__box');
+    interactive.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('active');
+            trail.classList.add('active');
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('active');
+            trail.classList.remove('active');
+        });
+    });
+
+    const videoEl = document.querySelector('.story__video');
+    if (videoEl) {
+        videoEl.addEventListener('mouseenter', () => {
+            cursor.classList.add('video');
+            trail.classList.add('video');
+        });
+        videoEl.addEventListener('mouseleave', () => {
+            cursor.classList.remove('video');
+            trail.classList.remove('video');
+        });
+    }
+
+
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        const img = card.querySelector('img');
+        if (!img) return;
+
+        let currentX = 0;
+        let currentY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        let currentScale = 1;
+        let targetScale = 1;
+        const speed = 0.08;
+
+        img.style.willChange = 'transform';
+
+        function animate() {
+            currentX += (targetX - currentX) * speed;
+            currentY += (targetY - currentY) * speed;
+            currentScale += (targetScale - currentScale) * speed;
+
+            img.style.transform = `
+      scale(${currentScale})
+      translate(${currentX}px, ${currentY}px)
+    `;
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        card.addEventListener('mouseenter', () => {
+            targetScale = 1.15;
+        });
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            targetX = x * 120;
+            targetY = y * 120;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            targetX = 0;
+            targetY = 0;
+            targetScale = 1;
+        });
+    });
+
+});
+
+//scroll
+let ease = window.pageYOffset;
+let target = ease;
+let velocity = 0;
+const friction = 0.92;
+const maxSpeed = 80;
+
+window.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    velocity += e.deltaY * 0.15;
+    velocity = Math.max(Math.min(velocity, maxSpeed), -maxSpeed);
+}, { passive: false });
+
+window.addEventListener('scroll', () => {
+    const native = window.pageYOffset;
+    if (Math.abs(native - ease) > 5) {
+        ease = native;
+        target = native;
+        velocity = 0;
+    }
+});
+
+(function loop() {
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+    velocity *= friction;
+    target += velocity;
+    target = Math.max(0, Math.min(target, maxScroll));
+
+    ease += (target - ease) * 0.12;
+    if (Math.abs(target - ease) < 0.5) ease = target;
+
+    window.scrollTo(0, ease);
+    requestAnimationFrame(loop);
+})();

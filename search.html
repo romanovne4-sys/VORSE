@@ -20,7 +20,10 @@
 </head>
 
 <body>
-
+    <div class="cursor">
+        <img class="cursor__play" src="images/play.svg" alt="">
+    </div>
+    <div class="cursor-trail"></div>
     <header class="header__search">
         <div class="container">
             <div class="header__content">
@@ -32,12 +35,13 @@
                     <nav class="menu">
 
 
+
                         <ul class="menu__list">
-                            <li class="menu__item "><a href="/" class="menu__link">Team</a></li>
-                            <li class="menu__item"><a href="#" class="menu__link">Properties</a></li>
-                            <li class="menu__item"><a href="search.html" class="menu__link">Search</a></li>
-                            <li class="menu__item"><a href="#press" class="menu__link">Press</a></li>
-                            <li class="menu__item"><a href="#explore" class="menu__link">estates</a></li>
+                            <li class="menu__item "><a href="/" class="menu__link link--color">Team</a></li>
+                            <li class="menu__item"><a href="#" class="menu__link link--color">detaliserties</a></li>
+                            <li class="menu__item"><a href="search.html" class="menu__link link--color">Search</a></li>
+                            <li class="menu__item"><a href="#press" class="menu__link link--color">Press</a></li>
+                            <li class="menu__item"><a href="#explore" class="menu__link link--color">estates</a></li>
                         </ul>
                     </nav>
                     <button class="burger" aria-label="Toggle menu" aria-expanded="false">
@@ -53,9 +57,9 @@
 
     <section class="search">
         <div class="container">
-            <h1 class="search__title page__title">search</h1>
+            <h1 class="page__title search__title">search</h1>
 
-            <div class="filters">
+            <div class="filters filters__search">
                 <div class="filter">
                     <label>Property type</label>
                     <select>
@@ -89,15 +93,17 @@
                 </div>
             </div>
 
-
-            <button class="map-btn">SHOW MAP</button>
+            <div class="map-btn-group">
+                <button class="map-btn map-btn-search">SHOW MAP</button>
+                <button class="hide-filters-btn">SHOW FILTERS</button>
+            </div>
         </div>
     </section>
 
     <section class="properties">
         <div class="container">
             <div class="properties__inner">
-                <div class="card-search card-search--1">
+                <div class="card-search card-search--1 card">
                     <img src="images/search-img-1.jpg" alt="">
                     <a href="">
                         <div class="card-search__content">
@@ -116,7 +122,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="card-search card-search--2">
+                <div class="card-search card-search--2 card">
                     <img src="images/search-img-2.jpg" alt="">
                     <a href="">
                         <div class="card-search__content">
@@ -139,7 +145,7 @@
             </div>
 
             <div class="properties__inner-two">
-                <div class="card-search card-search--3">
+                <div class="card-search card-search--3 card">
                     <img src="images/search-img-3.jpg" alt="">
                     <a href="">
                         <div class="card-search__content">
@@ -158,7 +164,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="card-search card-search--4">
+                <div class="card-search card-search--4 card">
                     <img src="images/search-img-4.jpg" alt="">
                     <a href="">
                         <div class="card-search__content">
@@ -180,7 +186,7 @@
             </div>
             <!-- 3й блок -->
             <div class="properties__inner-three">
-                <div class="card-search card-search--5">
+                <div class="card-search card-search--5 card">
                     <img src="images/search-img-5.jpg" alt="">
                     <a href="">
                         <div class="card-search__content">
@@ -199,7 +205,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="card-search card-search--6">
+                <div class="card-search card-search--6 card">
                     <img src="images/residences-card-1.webp" alt="">
                     <a href="">
                         <div class="card-search__content">
@@ -251,6 +257,8 @@
             </div>
         </div>
     </footer>
+    <script src="js/script.js" defer></script>
+    <script src="js/common.js" defer></script>
 </body>
 
 </html>

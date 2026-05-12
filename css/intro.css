@@ -30,16 +30,13 @@
     position: absolute;
     overflow: hidden;
     background: #111;
-    opacity: 0;
-    transition: none;
+    /* Начальные состояния убраны — GSAP управляет transform и opacity */
 }
 
 .intro-card--mid {
     width: clamp(280px, 38vw, 580px);
     height: clamp(340px, 55vh, 620px);
     left: 50%;
-    transform: translateX(-50%) scaleY(0);
-    transform-origin: bottom center;
     z-index: 2;
 }
 
@@ -47,8 +44,6 @@
     width: clamp(130px, 16vw, 240px);
     height: clamp(300px, 50vh, 560px);
     right: clamp(40px, 8vw, 140px);
-    transform: scaleY(0);
-    transform-origin: top center;
     z-index: 1;
 }
 
@@ -56,8 +51,6 @@
     width: clamp(130px, 16vw, 240px);
     height: clamp(300px, 50vh, 560px);
     left: clamp(40px, 8vw, 140px);
-    transform: scaleY(0);
-    transform-origin: bottom center;
     z-index: 1;
 }
 
@@ -66,30 +59,6 @@
     height: 100%;
     object-fit: cover;
     display: block;
-}
-
-
-/* --- появление --- */
-
-.intro-card--mid.is-in {
-    opacity: 1;
-    transform: translateX(-50%) scaleY(1);
-    transition: opacity 0.3s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.intro-card--right.is-in,
-.intro-card--left.is-in {
-    opacity: 1;
-    transform: scaleY(1);
-    transition: opacity 0.3s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-
-/* --- исчезновение --- */
-
-.intro-card.is-out {
-    opacity: 0;
-    transition: opacity 0.5s ease;
 }
 
 
@@ -110,18 +79,7 @@
     background: rgba(255, 255, 255, 0.55);
     width: 100%;
     max-width: 100%;
-    transform: scaleX(0);
-    transform-origin: left;
-}
-
-.intro-line__inner.is-growing {
-    transform: scaleX(1);
-    transition: transform 2s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.intro-line__inner.is-out {
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    /* transform и transform-origin убраны — GSAP управляет */
 }
 
 
@@ -138,72 +96,13 @@
    HEADER — начальные состояния
    ============================================= */
 
+/* transform убран — GSAP управляет через gsap.set */
 .header.header--zoomed {
-    transform: scale(1.1);
-    transform-origin: center center;
     transition: none;
 }
 
 .header.header--unzoom {
-    transform: scale(1);
     transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-
-/* --- меню и лого --- */
-
-header.logo,
-header.menu,
-header.burger {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: none;
-}
-
-.logo.is-visible,
-.menu.is-visible,
-.burger.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-
-/* --- заголовок --- */
-
-.header__title-1,
-.header__title-2 {
-    opacity: 0;
-    transform: translateX(50px);
-    display: block;
-    transition: none;
-}
-
-.header__title-1.is-visible {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.header__title-2.is-visible {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 1s ease 0.25s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
-}
-
-
-/* --- описание --- */
-
-.header__desc {
-    opacity: 0;
-    transform: translateY(14px);
-    transition: none;
-}
-
-.header__desc.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.8s ease 0.3s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 
 
@@ -215,27 +114,16 @@ header.burger {
     .intro-cards {
         flex-direction: column;
     }
+
     .intro-card--left,
     .intro-card--right {
         display: none;
     }
+
     .intro-card--mid {
         width: 100vw;
-        /* max-width: 500px; */
-        /* ограничил, чтобы не была огромной */
         height: 70svh;
-        /* адекватная высота */
         top: 50%;
-        transform: translate(-50%, -50%) scaleY(0);
+        /* translateY(-50%) ставит GSAP через yPercent: -50 */
     }
-    .intro-card--mid.is-in {
-        transform: translate(-50%, -50%) scaleY(1);
-    }
-    /* .intro-line {
-        transform: translateY(-40px);
-    }
-    .intro-line__inner {
-        height: 2px;
-        width: 100%;
-    } */
 }
