@@ -60,15 +60,18 @@
             // MOBILE — БЕЗ SCALE
             gsap.set([mid, left, right], {
                 opacity: 0,
-                y: 30
+                y: 30,
+                xPercent: (i, el) => el === mid ? -50 : 0,
+                yPercent: (i, el) => el === mid ? -50 : 0
             });
         } else {
             // DESKTOP — можно оставить более "кинематографично"
             gsap.set(mid, {
                 opacity: 0,
-                scaleY: 0,
                 xPercent: -50,
-                transformOrigin: 'bottom center'
+                yPercent: -50,
+                left: "50%",
+                top: "50%"
             });
 
             gsap.set(left, {

@@ -37,6 +37,7 @@
     width: clamp(280px, 38vw, 580px);
     height: clamp(340px, 55vh, 620px);
     left: 50%;
+    top: 50%;
     z-index: 2;
 }
 
