@@ -300,24 +300,22 @@
                     <h2 class="story__title section__title">story</h2>
                 </div>
             </div>
-
-            <!-- FIX: нормальная обёртка -->
             <div class="story__video-wrap">
-                <div class="story__video">
-                    <video autoplay muted loop playsinline preload="metadata" poster="images/story-bg.jpg">
+                <div class="story__video" style="position:relative;overflow:hidden;">
+                    <video autoplay muted loop playsinline
+                        style="position:absolute;top:50%;left:50%;width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;transform:translate(-50%,-50%);object-fit:cover;pointer-events:none;">
                         <source src="videos/story.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
-
             <div class="container">
                 <div class="story__inner">
-                    <p class="story__desc">
-                        We don’t just sell houses; we offer retreats where design embraces stillness.
-                        Discover a space where every corner is a dedicated statement of your seclusion.
-                    </p>
+                    <p class="story__desc">We don’t just sell houses; we offer retreats where design embraces stillness.
+                        Discover a space where every corner is a dedicated statement of your seclusion.</p>
                 </div>
             </div>
+
+
         </section>
 
         <section id="press" class="press section__box">
