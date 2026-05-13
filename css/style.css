@@ -483,7 +483,7 @@ body:not(.ready) .logo {
 
 /* адаптация для тач устройств */
 
-@media (pointer: coarse) {
+/* @media (pointer: coarse) {
     body {
         cursor: auto;
     }
@@ -492,7 +492,7 @@ body:not(.ready) .logo {
     .cursor-trail {
         display: none !important;
     }
-}
+} */
 
 .prop-preview__inner {
     width: clamp(120px, 16vw, 288px);
