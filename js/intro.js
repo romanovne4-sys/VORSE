@@ -47,6 +47,9 @@
         const title2 = document.querySelector('.header__title-2');
         const desc = document.querySelector('.header__desc');
 
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+        // Блокируем скролл
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
@@ -78,7 +81,16 @@
             transformOrigin: 'left center'
         });
 
-        if (header) gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
+        if (header) {
+            if (isMobile) {
+                // На мобильных — лёгкий zoom от 1.08 до 1 + fade.
+                // scale < ~1.1 не расширяет scroll width на Android.
+                gsap.set(header, { opacity: 0, scale: 1.08, transformOrigin: 'center center' });
+            } else {
+                gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
+            }
+        }
+
         if (logo) gsap.set(logo, { opacity: 0, y: -10 });
         if (menu) gsap.set(menu, { opacity: 0, y: -10 });
         if (burger) gsap.set(burger, { opacity: 0, y: -10 });
@@ -86,7 +98,6 @@
         if (title2) gsap.set(title2, { opacity: 0, x: 50 });
         if (desc) gsap.set(desc, { opacity: 0, y: 14 });
 
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
         if (isMobile) {
             gsap.set(mid, {
                 opacity: 0,
@@ -103,11 +114,11 @@
 
         gsap.set([midImg, leftImg, rightImg], {
             scale: 5.12,
-            transformOrigin: 'bootm center'
+            transformOrigin: 'bottom center'
         });
 
         // =========================
-        // ОТСТУПЫ ПРОГРЕСС-БАРА
+        // ПРОГРЕСС-БАР
         // =========================
 
         const LINE_PADDING = 0;
@@ -144,6 +155,7 @@
             ease: 'power2.in'
         }, '+=0.6');
 
+        // Восстанавливаем скролл пока оверлей ещё чёрный
         tl.call(() => {
             document.documentElement.style.overflow = '';
             document.body.style.overflow = '';
@@ -155,12 +167,24 @@
             onComplete: () => overlay.remove()
         }, '-=0.1');
 
-        if (header && !isMobile) {
-            tl.to(header, {
-                scale: 1,
-                duration: 1.8,
-                ease: 'power3.out'
-            }, '-=0.3');
+        // Анимация header — разная для мобильных и десктопа
+        if (header) {
+            if (isMobile) {
+                // Мобильные: fade + лёгкий zoom, без расширения страницы
+                tl.to(header, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 1.2,
+                    ease: 'power3.out'
+                }, '-=0.3');
+            } else {
+                // Десктоп: оригинальный zoom от 2.1 до 1
+                tl.to(header, {
+                    scale: 1,
+                    duration: 1.8,
+                    ease: 'power3.out'
+                }, '-=0.3');
+            }
         }
 
         tl.to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=1.5');
