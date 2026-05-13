@@ -28,9 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let isActive = false;
     let hideTimeout = null;
 
-    // =========================
-    // PREVIEW
-    // =========================
     function showPreview(key) {
         previewInner.innerHTML = '';
 
@@ -49,9 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         preview.style.opacity = '0';
     }
 
-    // =========================
-    // BOTTOM SHEET
-    // =========================
     function openSheet(key) {
         sheetImage.innerHTML = '';
 
@@ -71,19 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
         bottomSheet.classList.remove('open');
     }
 
-    if (sheetClose) {
-        sheetClose.addEventListener('click', closeSheet);
-    }
+    if (sheetClose) sheetClose.addEventListener('click', closeSheet);
 
     const overlay = bottomSheet ? bottomSheet.querySelector('.bottom-sheet__overlay') : null;
+    if (overlay) overlay.addEventListener('click', closeSheet);
 
-    if (overlay) {
-        overlay.addEventListener('click', closeSheet);
-    }
-
-    // =========================
-    // BREAKPOINTS
-    // =========================
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     const isTablet = window.matchMedia("(min-width: 768px) and (max-width: 1024px)").matches;
     const isDesktop = window.matchMedia("(min-width: 1025px)").matches;
@@ -93,10 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================
     if (isDesktop) {
 
-        let mouseX = 0,
-            mouseY = 0;
-        let curX = 0,
-            curY = 0;
+        let mouseX = 0, mouseY = 0;
+        let curX = 0, curY = 0;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
@@ -108,16 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
             curY += (mouseY - curY) * 0.1;
 
             if (isActive) {
-                const pw = 200,
-                    ph = 280;
-                const margin = 20,
-                    offX = 36;
+                const pw = 200, ph = 280;
+                const margin = 20, offX = 36;
 
                 const spaceRight = window.innerWidth - curX - offX;
 
-                const x = spaceRight >= pw + margin ?
-                    curX + offX :
-                    curX - pw - offX;
+                const x = spaceRight >= pw + margin
+                    ? curX + offX
+                    : curX - pw - offX;
 
                 const y = Math.min(
                     Math.max(curY - ph / 2, margin),
@@ -215,9 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalWidth = () =>
             cardItems.reduce((acc, card) => acc + card.offsetWidth, 0) - window.innerWidth;
 
-        gsap.set(cards, {
-            x: -totalWidth()
-        });
+        gsap.set(cards, { x: -totalWidth() });
 
         gsap.to(cards, {
             x: 0,
@@ -255,205 +235,80 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-//update may 9
+// =========================
+// CUSTOM CURSOR (FIXED)
+// =========================
 
 document.addEventListener('DOMContentLoaded', () => {
-  const cursor = document.querySelector('.cursor');
-  const trail = document.querySelector('.cursor-trail');
-  if (!cursor || !trail) return;
-  let mouseX = 0, mouseY = 0;
-  let cursorX = 0, cursorY = 0;
-  let trailX = 0, trailY = 0;
-  const cursorSpeed = 0.18;
-  const trailSpeed = 0.08;
 
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
+    const canUseCursor = window.matchMedia(
+        "(hover: hover) and (pointer: fine)"
+    ).matches;
 
-  const storyWrap = document.querySelector('.story__video-wrap');
-  const storyVideo = document.querySelector('.story__video');
-  let initialHeight = 0;
-  let wrapStart = 0;
-  let animDistance = 0;
-  let zoomDistance = 0;
+    if (!canUseCursor) return; // ⛔ полностью отключаем на мобилках
 
-  if (storyWrap && storyVideo) {
-    initialHeight = storyVideo.offsetHeight;
-    wrapStart = storyWrap.offsetTop;
-    animDistance = (storyWrap.offsetHeight - window.innerHeight) * 0.5;
-    zoomDistance = (storyWrap.offsetHeight - window.innerHeight) * 0.5;
-  }
+    const cursor = document.querySelector('.cursor');
+    const trail = document.querySelector('.cursor-trail');
+    if (!cursor || !trail) return;
 
-  function updateStory() {
-    if (!storyWrap || !storyVideo) return;
-    const scrollY = window.scrollY;
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    let trailX = 0, trailY = 0;
 
-    if (scrollY < wrapStart) {
-      storyVideo.style.position = 'absolute';
-      storyVideo.style.top = '0';
-      storyVideo.style.bottom = '';
-      storyVideo.style.left = '0';
-      storyVideo.style.width = '100%';
-      storyVideo.style.height = initialHeight + 'px';
-      storyVideo.style.backgroundSize = 'cover';
+    const cursorSpeed = 0.18;
+    const trailSpeed = 0.08;
 
-    } else if (scrollY >= wrapStart && scrollY <= wrapStart + animDistance) {
-      const progress = (scrollY - wrapStart) / animDistance;
-      const newHeight = initialHeight + (window.innerHeight - initialHeight) * progress;
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
 
-      storyVideo.style.position = 'fixed';
-      storyVideo.style.top = '0';
-      storyVideo.style.bottom = '';
-      storyVideo.style.left = '0';
-      storyVideo.style.width = '100%';
-      storyVideo.style.height = newHeight + 'px';
-      storyVideo.style.backgroundSize = 'cover';
+    function animate() {
+        cursorX += (mouseX - cursorX) * cursorSpeed;
+        cursorY += (mouseY - cursorY) * cursorSpeed;
 
-    } else if (scrollY > wrapStart + animDistance && scrollY <= wrapStart + animDistance + zoomDistance) {
-      const zoomProgress = (scrollY - wrapStart - animDistance) / zoomDistance;
-      const scale = 100 + zoomProgress * 15;
+        trailX += (mouseX - trailX) * trailSpeed;
+        trailY += (mouseY - trailY) * trailSpeed;
 
-      storyVideo.style.position = 'fixed';
-      storyVideo.style.top = '0';
-      storyVideo.style.bottom = '';
-      storyVideo.style.left = '0';
-      storyVideo.style.width = '100%';
-      storyVideo.style.height = window.innerHeight + 'px';
-      storyVideo.style.backgroundSize = scale + '%';
+        cursor.style.transform =
+            `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
 
-    } else {
-      const wrapHeight = storyWrap.offsetHeight;
-      storyVideo.style.position = 'absolute';
-      storyVideo.style.top = (wrapHeight - window.innerHeight) + 'px';
-      storyVideo.style.bottom = '';
-      storyVideo.style.left = '0';
-      storyVideo.style.width = '100%';
-      storyVideo.style.height = window.innerHeight + 'px';
-      storyVideo.style.backgroundSize = '115%';
+        trail.style.transform =
+            `translate(${trailX}px, ${trailY}px) translate(-50%, -50%)`;
+
+        requestAnimationFrame(animate);
     }
-  }
 
-  function animate() {
-    cursorX += (mouseX - cursorX) * cursorSpeed;
-    cursorY += (mouseY - cursorY) * cursorSpeed;
-    trailX += (mouseX - trailX) * trailSpeed;
-    trailY += (mouseY - trailY) * trailSpeed;
-    cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
-    trail.style.transform = `translate(${trailX}px, ${trailY}px) translate(-50%, -50%)`;
-    updateStory();
-    requestAnimationFrame(animate);
-  }
+    animate();
 
-  animate();
+    const interactive = document.querySelectorAll(
+        'a, button, .cards__link, li, input, .form-checkbox__box'
+    );
 
-  const interactive = document.querySelectorAll('a, button, .cards__link, li, input, .form-checkbox__box');
-  interactive.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('active');
-      trail.classList.add('active');
+    interactive.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('active');
+            trail.classList.add('active');
+        });
+
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('active');
+            trail.classList.remove('active');
+        });
     });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('active');
-      trail.classList.remove('active');
-    });
-  });
 
-  const videoEl = document.querySelector('.story__video');
-  if (videoEl) {
-    videoEl.addEventListener('mouseenter', () => {
-      cursor.classList.add('video');
-      trail.classList.add('video');
-    });
-    videoEl.addEventListener('mouseleave', () => {
-      cursor.classList.remove('video');
-      trail.classList.remove('video');
-    });
-  }
+    const videoEl = document.querySelector('.story__video');
 
+    if (videoEl) {
+        videoEl.addEventListener('mouseenter', () => {
+            cursor.classList.add('video');
+            trail.classList.add('video');
+        });
 
-const cards = document.querySelectorAll('.card');
-cards.forEach(card => {
-  const img = card.querySelector('img');
-  if (!img) return;
-
-  let currentX = 0;
-  let currentY = 0;
-  let targetX = 0;
-  let targetY = 0;
-  let currentScale = 1;
-  let targetScale = 1;
-  const speed = 0.08;
-
-  img.style.willChange = 'transform';
-
-  function animate() {
-    currentX += (targetX - currentX) * speed;
-    currentY += (targetY - currentY) * speed;
-    currentScale += (targetScale - currentScale) * speed;
-
-    img.style.transform = `
-      scale(${currentScale})
-      translate(${currentX}px, ${currentY}px)
-    `;
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  card.addEventListener('mouseenter', () => {
-    targetScale = 1.15;
-  });
-
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    targetX = x * 120;
-    targetY = y * 120;
-  });
-
-  card.addEventListener('mouseleave', () => {
-    targetX = 0;
-    targetY = 0;
-    targetScale = 1;
-  });
-});
+        videoEl.addEventListener('mouseleave', () => {
+            cursor.classList.remove('video');
+            trail.classList.remove('video');
+        });
+    }
 
 });
-
-//scroll
-let ease = window.pageYOffset;
-let target = ease;
-let velocity = 0;
-const friction = 0.92;
-const maxSpeed = 80;
-
-window.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  velocity += e.deltaY * 0.15;
-  velocity = Math.max(Math.min(velocity, maxSpeed), -maxSpeed);
-}, { passive: false });
-
-window.addEventListener('scroll', () => {
-  const native = window.pageYOffset;
-  if (Math.abs(native - ease) > 5) {
-    ease = native;
-    target = native;
-    velocity = 0;
-  }
-});
-
-(function loop() {
-  const maxScroll = document.body.scrollHeight - window.innerHeight;
-
-  velocity *= friction;
-  target += velocity;
-  target = Math.max(0, Math.min(target, maxScroll));
-
-  ease += (target - ease) * 0.12;
-  if (Math.abs(target - ease) < 0.5) ease = target;
-
-  window.scrollTo(0, ease);
-  requestAnimationFrame(loop);
-})();
