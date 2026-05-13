@@ -299,12 +299,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const videoEl = document.querySelector('.story__video');
 
-    if (videoEl) {
+    if (videoEl && !isTouchDevice) {
         videoEl.addEventListener('mouseenter', () => {
             cursor.classList.add('video');
             trail.classList.add('video');
         });
-
+    
         videoEl.addEventListener('mouseleave', () => {
             cursor.classList.remove('video');
             trail.classList.remove('video');
