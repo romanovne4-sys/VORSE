@@ -11,12 +11,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
     pointer-events: all;
+    will-change: opacity;
 }
 
 .intro-cards {
     position: relative;
     width: 100%;
+    height: 100%;
     flex: 1;
     display: flex;
     align-items: center;
@@ -24,13 +27,17 @@
 }
 
 
-/* --- карточки --- */
+/* =============================================
+   CARDS
+   ============================================= */
 
 .intro-card {
     position: absolute;
     overflow: hidden;
     background: #111;
-    /* Начальные состояния убраны — GSAP управляет transform и opacity */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    contain: layout paint style;
 }
 
 .intro-card--mid {
@@ -59,11 +66,13 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 
 /* =============================================
-   ЛИНИЯ
+   LINE
    ============================================= */
 
 .intro-line {
@@ -79,30 +88,50 @@
     background: rgba(255, 255, 255, 0.55);
     width: 100%;
     max-width: 100%;
-    /* transform и transform-origin убраны — GSAP управляет */
-}
-
-
-/* --- оверлей уходит --- */
-
-.intro-overlay.is-done {
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 
 /* =============================================
-   HEADER — начальные состояния
+   HEADER
    ============================================= */
 
-/* transform убран — GSAP управляет через gsap.set */
-.header.header--zoomed {
-    transition: none;
+.header {
+    will-change: transform;
 }
 
-.header.header--unzoom {
-    transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+/* =============================================
+   UI ELEMENTS
+   ============================================= */
+
+.logo,
+.menu,
+.burger {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity .6s ease, transform .6s ease;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+.logo.is-visible,
+.menu.is-visible,
+.burger.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =============================================
+   TITLES
+   ============================================= */
+
+.header__title-1,
+.header__title-2,
+.header__desc {
+    will-change: transform, opacity;
 }
 
 
@@ -114,16 +143,25 @@
     .intro-cards {
         flex-direction: column;
     }
-
     .intro-card--left,
     .intro-card--right {
         display: none;
     }
-
     .intro-card--mid {
         width: 100vw;
         height: 70svh;
         top: 50%;
-        /* translateY(-50%) ставит GSAP через yPercent: -50 */
+        left: 50%;
+    }
+    .intro-line {
+        margin-bottom: 32px;
+    }
+    .logo,
+    .burger {
+        transform: translate3d(0, -10px, 0);
+    }
+    .logo.is-visible,
+    .burger.is-visible {
+        transform: translate3d(0, 0, 0);
     }
 }
