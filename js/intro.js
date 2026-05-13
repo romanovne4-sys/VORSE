@@ -81,10 +81,14 @@
             transformOrigin: 'left center'
         });
 
-        // На мобильных НЕ делаем scale на header — это главная причина
-        // горизонтального скролла: scale: 2.1 расширяет scroll width до ~210vw
-        if (header && !isMobile) {
-            gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
+        if (header) {
+            if (isMobile) {
+                // На мобильных — лёгкий zoom от 1.08 до 1 + fade.
+                // scale < ~1.1 не расширяет scroll width на Android.
+                gsap.set(header, { opacity: 0, scale: 1.08, transformOrigin: 'center center' });
+            } else {
+                gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
+            }
         }
 
         if (logo) gsap.set(logo, { opacity: 0, y: -10 });
@@ -163,13 +167,24 @@
             onComplete: () => overlay.remove()
         }, '-=0.1');
 
-        // Zoom header только на десктопе
-        if (header && !isMobile) {
-            tl.to(header, {
-                scale: 1,
-                duration: 1.8,
-                ease: 'power3.out'
-            }, '-=0.3');
+        // Анимация header — разная для мобильных и десктопа
+        if (header) {
+            if (isMobile) {
+                // Мобильные: fade + лёгкий zoom, без расширения страницы
+                tl.to(header, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 1.2,
+                    ease: 'power3.out'
+                }, '-=0.3');
+            } else {
+                // Десктоп: оригинальный zoom от 2.1 до 1
+                tl.to(header, {
+                    scale: 1,
+                    duration: 1.8,
+                    ease: 'power3.out'
+                }, '-=0.3');
+            }
         }
 
         tl.to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=1.5');
