@@ -47,9 +47,6 @@
         const title2 = document.querySelector('.header__title-2');
         const desc = document.querySelector('.header__desc');
 
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-        // Блокируем скролл
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
@@ -81,12 +78,7 @@
             transformOrigin: 'left center'
         });
 
-        // На мобильных НЕ делаем scale на header — это главная причина
-        // горизонтального скролла: scale: 2.1 расширяет scroll width до ~210vw
-        if (header && !isMobile) {
-            gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
-        }
-
+        if (header) gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
         if (logo) gsap.set(logo, { opacity: 0, y: -10 });
         if (menu) gsap.set(menu, { opacity: 0, y: -10 });
         if (burger) gsap.set(burger, { opacity: 0, y: -10 });
@@ -94,6 +86,7 @@
         if (title2) gsap.set(title2, { opacity: 0, x: 50 });
         if (desc) gsap.set(desc, { opacity: 0, y: 14 });
 
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
         if (isMobile) {
             gsap.set(mid, {
                 opacity: 0,
@@ -110,11 +103,11 @@
 
         gsap.set([midImg, leftImg, rightImg], {
             scale: 5.12,
-            transformOrigin: 'bottom center'
+            transformOrigin: 'bootm center'
         });
 
         // =========================
-        // ПРОГРЕСС-БАР
+        // ОТСТУПЫ ПРОГРЕСС-БАРА
         // =========================
 
         const LINE_PADDING = 0;
@@ -151,7 +144,6 @@
             ease: 'power2.in'
         }, '+=0.6');
 
-        // Восстанавливаем скролл пока оверлей ещё чёрный
         tl.call(() => {
             document.documentElement.style.overflow = '';
             document.body.style.overflow = '';
@@ -163,7 +155,6 @@
             onComplete: () => overlay.remove()
         }, '-=0.1');
 
-        // Zoom header только на десктопе
         if (header && !isMobile) {
             tl.to(header, {
                 scale: 1,
