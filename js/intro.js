@@ -49,7 +49,6 @@
 
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-        // Блокируем скролл
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
@@ -83,8 +82,8 @@
 
         if (header) {
             if (isMobile) {
-                // На мобильных — лёгкий zoom от 1.08 до 1 + fade.
-                // scale < ~1.1 не расширяет scroll width на Android.
+                // scale: 2.1 на мобильных расширяет scroll width до ~210vw —
+                // используем безопасный fade + минимальный zoom
                 gsap.set(header, { opacity: 0, scale: 1.08, transformOrigin: 'center center' });
             } else {
                 gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
@@ -170,7 +169,6 @@
         // Анимация header — разная для мобильных и десктопа
         if (header) {
             if (isMobile) {
-                // Мобильные: fade + лёгкий zoom, без расширения страницы
                 tl.to(header, {
                     opacity: 1,
                     scale: 1,
@@ -178,7 +176,6 @@
                     ease: 'power3.out'
                 }, '-=0.3');
             } else {
-                // Десктоп: оригинальный zoom от 2.1 до 1
                 tl.to(header, {
                     scale: 1,
                     duration: 1.8,
