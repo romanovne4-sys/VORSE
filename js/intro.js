@@ -85,8 +85,6 @@
         if (menu) gsap.set(menu, { opacity: 0, y: -10 });
         if (burger) gsap.set(burger, { opacity: 0, y: -10 });
 
-        // x: 50 на мобильных сдвигает заголовки за край viewport и создаёт
-        // горизонтальный скролл. На мобильных используем только opacity + y.
         if (isMobile) {
             if (title1) gsap.set(title1, { opacity: 0, y: 20 });
             if (title2) gsap.set(title2, { opacity: 0, y: 20 });
@@ -171,24 +169,27 @@
 
         // ── HEADER разворачивается (только десктоп) ───────
         if (header && !isMobile) {
-            tl.to(header, { scale: 1, duration: 1.8, ease: 'power3.out' }, '-=0.3');
+            tl.to(header, { scale: 1, duration: 1.8, ease: 'power3.out' }, '+=0');
         }
 
-        // ── UI появляется ─────────────────────────────────
-        tl.to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=1.5');
-        tl.to(menu, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<+0.1');
-        tl.to(burger, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<');
+        // ── UI появляется ПОСЛЕ оверлея ───────────────────
+        // На десктопе -=1.4 даёт красивое перекрытие с zoom хедера,
+        // на мобильных запускаем строго после удаления оверлея.
+        const uiStart = isMobile ? '+=0' : '-=1.4';
+
+        if (logo) tl.to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, uiStart);
+        if (menu) tl.to(menu, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<+0.1');
+        if (burger) tl.to(burger, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<');
 
         if (isMobile) {
-            // На мобильных анимируем через y, без x
-            tl.to(title1, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '<-0.2');
-            tl.to(title2, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
+            if (title1) tl.to(title1, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '<+0.1');
+            if (title2) tl.to(title2, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
         } else {
-            tl.to(title1, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<-0.2');
-            tl.to(title2, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
+            if (title1) tl.to(title1, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<+0.1');
+            if (title2) tl.to(title2, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
         }
 
-        tl.to(desc, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '<+0.1');
+        if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '<+0.1');
     }
 
     if (document.readyState === 'loading') {
