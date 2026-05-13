@@ -1,3 +1,4 @@
+document.body.classList.add('ready');
 (function() {
     'use strict';
 
@@ -211,5 +212,6 @@
     } else {
         runIntro();
     }
+
 
 })();

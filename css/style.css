@@ -55,6 +55,12 @@ body.no-scroll {
     overflow: hidden;
 }
 
+body:not(.ready) .header,
+body:not(.ready) .menu,
+body:not(.ready) .logo {
+    opacity: 0;
+}
+
 .container {
     width: 100%;
     max-width: 1756px;
@@ -110,7 +116,7 @@ body.no-scroll {
 
 .menu__list {
     display: flex;
-    gap: clamp(28px, 4vw, 70px);
+    gap: clamp(28px, 3vw, 70px);
 }
 
 .menu__link {
@@ -154,9 +160,6 @@ body.no-scroll {
 .link--color:hover::after {
     opacity: 1;
 }
-
-
-/* header title */
 
 .burger {
     display: none;
@@ -479,11 +482,13 @@ body.no-scroll {
 
 /* адаптация для тач устройств */
 
-@media (hover: none) and (pointer: coarse) {
-    .prop-preview {
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+@media (pointer: coarse) {
+    body {
+        cursor: auto;
+    }
+    .cursor,
+    .cursor-trail {
+        display: none !important;
     }
 }
 
@@ -1574,6 +1579,16 @@ option {
 
 * {
     cursor: none !important;
+}
+
+
+/* для телефонов и планшетов */
+
+@media (pointer: coarse) {
+    .cursor,
+    .cursor-trail {
+        display: none !important;
+    }
 }
 
 
