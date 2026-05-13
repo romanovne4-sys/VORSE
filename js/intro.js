@@ -47,6 +47,8 @@
         const title2 = document.querySelector('.header__title-2');
         const desc = document.querySelector('.header__desc');
 
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
@@ -78,14 +80,21 @@
             transformOrigin: 'left center'
         });
 
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
         if (header && !isMobile) gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
         if (logo) gsap.set(logo, { opacity: 0, y: -10 });
         if (menu) gsap.set(menu, { opacity: 0, y: -10 });
         if (burger) gsap.set(burger, { opacity: 0, y: -10 });
-        if (title1) gsap.set(title1, { opacity: 0, x: 50 });
-        if (title2) gsap.set(title2, { opacity: 0, x: 50 });
+
+        // x: 50 на мобильных сдвигает заголовки за край viewport и создаёт
+        // горизонтальный скролл. На мобильных используем только opacity + y.
+        if (isMobile) {
+            if (title1) gsap.set(title1, { opacity: 0, y: 20 });
+            if (title2) gsap.set(title2, { opacity: 0, y: 20 });
+        } else {
+            if (title1) gsap.set(title1, { opacity: 0, x: 50 });
+            if (title2) gsap.set(title2, { opacity: 0, x: 50 });
+        }
+
         if (desc) gsap.set(desc, { opacity: 0, y: 14 });
 
         if (isMobile) {
@@ -104,15 +113,14 @@
 
         gsap.set([midImg, leftImg, rightImg], {
             scale: 5.12,
-            transformOrigin: 'bootm center'
+            transformOrigin: 'bottom center'
         });
 
         // =========================
         // ОТСТУПЫ ПРОГРЕСС-БАРА
-        // Меняйте LINE_PADDING под свой лейаут
         // =========================
 
-        const LINE_PADDING = 0 // px с каждой стороны
+        const LINE_PADDING = 0;
 
         gsap.set(line, {
             scaleX: 0,
@@ -128,64 +136,19 @@
         const tl = gsap.timeline();
 
         // ── MID появляется + линия до 30% ────────────────
-        tl.to(mid, {
-            opacity: 1,
-            scaleY: 1,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '+=0.3');
-
-        tl.to(midImg, {
-            scale: 1,
-            duration: 1.6,
-            ease: 'power3.out'
-        }, '<');
-
-        tl.to(line, {
-            scaleX: 0.3,
-            duration: 0.5,
-            ease: 'power2.out'
-        }, '<+0.2');
+        tl.to(mid, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.3');
+        tl.to(midImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
+        tl.to(line, { scaleX: 0.3, duration: 0.5, ease: 'power2.out' }, '<+0.2');
 
         // ── RIGHT появляется + линия до 65% ──────────────
-        tl.to(right, {
-            opacity: 1,
-            scaleY: 1,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '+=0.3');
-
-        tl.to(rightImg, {
-            scale: 1,
-            duration: 1.6,
-            ease: 'power3.out'
-        }, '<');
-
-        tl.to(line, {
-            scaleX: 0.65,
-            duration: 0.5,
-            ease: 'power2.out'
-        }, '<+0.2');
+        tl.to(right, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.3');
+        tl.to(rightImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
+        tl.to(line, { scaleX: 0.65, duration: 0.5, ease: 'power2.out' }, '<+0.2');
 
         // ── LEFT появляется + линия до 100% ──────────────
-        tl.to(left, {
-            opacity: 1,
-            scaleY: 1,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '+=0.5');
-
-        tl.to(leftImg, {
-            scale: 1,
-            duration: 1.6,
-            ease: 'power3.out'
-        }, '<');
-
-        tl.to(line, {
-            scaleX: 1,
-            duration: 0.4,
-            ease: 'power2.out'
-        }, '<+0.2');
+        tl.to(left, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.5');
+        tl.to(leftImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
+        tl.to(line, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, '<+0.2');
 
         // ── ВЫХОД — карточки и линия ──────────────────────
         tl.to([mid, left, right, line], {
@@ -206,21 +169,25 @@
             }
         }, '-=0.1');
 
-        // ── HEADER разворачивается ────────────────────────
+        // ── HEADER разворачивается (только десктоп) ───────
         if (header && !isMobile) {
-            tl.to(header, {
-                scale: 1,
-                duration: 1.8,
-                ease: 'power3.out'
-            }, '-=0.3');
+            tl.to(header, { scale: 1, duration: 1.8, ease: 'power3.out' }, '-=0.3');
         }
 
         // ── UI появляется ─────────────────────────────────
         tl.to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=1.5');
         tl.to(menu, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<+0.1');
         tl.to(burger, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<');
-        tl.to(title1, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<-0.2');
-        tl.to(title2, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
+
+        if (isMobile) {
+            // На мобильных анимируем через y, без x
+            tl.to(title1, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '<-0.2');
+            tl.to(title2, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
+        } else {
+            tl.to(title1, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<-0.2');
+            tl.to(title2, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
+        }
+
         tl.to(desc, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '<+0.1');
     }
 
