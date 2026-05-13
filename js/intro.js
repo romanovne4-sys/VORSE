@@ -53,27 +53,36 @@
         document.body.style.overflow = 'hidden';
 
         // =========================
-        // INIT STATE — карточки
+        // INIT CARDS
         // =========================
 
-        gsap.set(mid, {
-            opacity: 0,
-            scaleY: 0,
-            xPercent: -50,
-            transformOrigin: 'bottom center'
-        });
+        if (isMobile) {
+            // MOBILE — БЕЗ SCALE
+            gsap.set([mid, left, right], {
+                opacity: 0,
+                y: 30
+            });
+        } else {
+            // DESKTOP — можно оставить более "кинематографично"
+            gsap.set(mid, {
+                opacity: 0,
+                scaleY: 0,
+                xPercent: -50,
+                transformOrigin: 'bottom center'
+            });
 
-        gsap.set(left, {
-            opacity: 0,
-            scaleY: 0,
-            transformOrigin: 'bottom center'
-        });
+            gsap.set(left, {
+                opacity: 0,
+                scaleY: 0,
+                transformOrigin: 'bottom center'
+            });
 
-        gsap.set(right, {
-            opacity: 0,
-            scaleY: 0,
-            transformOrigin: 'top center'
-        });
+            gsap.set(right, {
+                opacity: 0,
+                scaleY: 0,
+                transformOrigin: 'top center'
+            });
+        }
 
         gsap.set(line, {
             scaleX: 0,
@@ -81,6 +90,7 @@
         });
 
         if (header && !isMobile) gsap.set(header, { scale: 2.1, transformOrigin: 'center center' });
+
         if (logo) gsap.set(logo, { opacity: 0, y: -10 });
         if (menu) gsap.set(menu, { opacity: 0, y: -10 });
         if (burger) gsap.set(burger, { opacity: 0, y: -10 });
@@ -95,18 +105,8 @@
 
         if (desc) gsap.set(desc, { opacity: 0, y: 14 });
 
-        if (isMobile) {
-            gsap.set(mid, {
-                opacity: 0,
-                scaleY: 0,
-                xPercent: -50,
-                yPercent: -50,
-                transformOrigin: 'center center'
-            });
-        }
-
         // =========================
-        // INIT STATE — картинки
+        // IMAGES (без изменений)
         // =========================
 
         gsap.set([midImg, leftImg, rightImg], {
@@ -114,15 +114,10 @@
             transformOrigin: 'bottom center'
         });
 
-        // =========================
-        // ОТСТУПЫ ПРОГРЕСС-БАРА
-        // =========================
-
         const LINE_PADDING = 0;
 
         gsap.set(line, {
             scaleX: 0,
-            transformOrigin: 'left center',
             x: LINE_PADDING,
             width: `calc(100% - ${LINE_PADDING * 2}px)`
         });
@@ -133,30 +128,49 @@
 
         const tl = gsap.timeline();
 
-        // ── MID появляется + линия до 30% ────────────────
-        tl.to(mid, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.3');
+        // MID
+        tl.to(mid, {
+            opacity: 1,
+            y: 0,
+            scaleY: isMobile ? undefined : 1,
+            duration: 1.2,
+            ease: 'power3.out'
+        }, '+=0.3');
+
         tl.to(midImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
         tl.to(line, { scaleX: 0.3, duration: 0.5, ease: 'power2.out' }, '<+0.2');
 
-        // ── RIGHT появляется + линия до 65% ──────────────
-        tl.to(right, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.3');
+        // RIGHT
+        tl.to(right, {
+            opacity: 1,
+            y: 0,
+            scaleY: isMobile ? undefined : 1,
+            duration: 1.2,
+            ease: 'power3.out'
+        }, '+=0.3');
+
         tl.to(rightImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
         tl.to(line, { scaleX: 0.65, duration: 0.5, ease: 'power2.out' }, '<+0.2');
 
-        // ── LEFT появляется + линия до 100% ──────────────
-        tl.to(left, { opacity: 1, scaleY: 1, duration: 1.2, ease: 'power3.out' }, '+=0.5');
+        // LEFT
+        tl.to(left, {
+            opacity: 1,
+            y: 0,
+            scaleY: isMobile ? undefined : 1,
+            duration: 1.2,
+            ease: 'power3.out'
+        }, '+=0.5');
+
         tl.to(leftImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
         tl.to(line, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, '<+0.2');
 
-        // ── ВЫХОД — карточки и линия ──────────────────────
+        // EXIT
         tl.to([mid, left, right, line], {
             opacity: 0,
-            scaleY: 0,
             duration: 0.4,
             ease: 'power2.in'
         }, '+=0.6');
 
-        // ── ОВЕРЛЕЙ исчезает ──────────────────────────────
         tl.to(overlay, {
             opacity: 0,
             duration: 0.5,
@@ -167,29 +181,26 @@
             }
         }, '-=0.1');
 
-        // ── HEADER разворачивается (только десктоп) ───────
+        // HEADER + UI
         if (header && !isMobile) {
             tl.to(header, { scale: 1, duration: 1.8, ease: 'power3.out' }, '+=0');
         }
 
-        // ── UI появляется ПОСЛЕ оверлея ───────────────────
-        // На десктопе -=1.4 даёт красивое перекрытие с zoom хедера,
-        // на мобильных запускаем строго после удаления оверлея.
         const uiStart = isMobile ? '+=0' : '-=1.4';
 
-        if (logo) tl.to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, uiStart);
-        if (menu) tl.to(menu, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<+0.1');
-        if (burger) tl.to(burger, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<');
+        if (logo) tl.to(logo, { opacity: 1, y: 0, duration: 0.6 }, uiStart);
+        if (menu) tl.to(menu, { opacity: 1, y: 0, duration: 0.6 }, '<+0.1');
+        if (burger) tl.to(burger, { opacity: 1, y: 0, duration: 0.6 }, '<');
 
         if (isMobile) {
-            if (title1) tl.to(title1, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '<+0.1');
-            if (title2) tl.to(title2, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
+            if (title1) tl.to(title1, { opacity: 1, y: 0, duration: 0.8 }, '<+0.1');
+            if (title2) tl.to(title2, { opacity: 1, y: 0, duration: 0.8 }, '<+0.15');
         } else {
-            if (title1) tl.to(title1, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<+0.1');
-            if (title2) tl.to(title2, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
+            if (title1) tl.to(title1, { opacity: 1, x: 0, duration: 0.8 }, '<+0.1');
+            if (title2) tl.to(title2, { opacity: 1, x: 0, duration: 0.8 }, '<+0.15');
         }
 
-        if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '<+0.1');
+        if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.8 }, '<+0.1');
     }
 
     if (document.readyState === 'loading') {
