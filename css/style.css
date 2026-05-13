@@ -508,9 +508,6 @@ body:not(.ready) .logo {
 
 
 /* section story (3)*/
-/* =============================================
-   STORY VIDEO (DESKTOP + MOBILE FIX)
-   ============================================= */
 
 .story__video-wrap {
     height: 400vh;
@@ -518,30 +515,18 @@ body:not(.ready) .logo {
     margin-bottom: clamp(40px, 7vw, 125px);
 }
 
-/* сам контейнер видео */
 .story__video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: clamp(350px, 45vw, 804px);
-
-    overflow: hidden;
     background: url(../images/story-bg.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-/* video — теперь нормально без vh/vw магии */
-.story__video video {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    height: clamp(350px, 45vw, 804px);
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-/* sticky режим (только desktop логика) */
 .story__video.is-sticky {
     position: fixed;
     top: 0;
@@ -552,7 +537,6 @@ body:not(.ready) .logo {
     margin-bottom: 0;
 }
 
-/* layout внутри секции */
 .story__inner {
     display: flex;
     justify-content: flex-end;
@@ -563,30 +547,6 @@ body:not(.ready) .logo {
     display: inline-block;
 }
 
-/* =============================================
-   MOBILE FIX
-   ============================================= */
-
-@media (max-width: 768px) {
-
-    .story__video-wrap {
-        height: auto;
-        margin-bottom: clamp(40px, 7vw, 125px);
-    }
-
-    .story__video {
-        position: relative !important;
-        height: 60vh;
-    }
-
-    .story__video.is-sticky {
-        position: relative !important;
-        height: 60vh;
-        top: auto;
-        left: auto;
-        z-index: auto;
-    }
-}
 
 /* section press (4) */
 
