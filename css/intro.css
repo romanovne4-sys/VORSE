@@ -117,10 +117,12 @@
     .intro-cards {
         flex-direction: column;
     }
+
     .intro-card--left,
     .intro-card--right {
         display: none;
     }
+
     .intro-card--mid {
         width: 100vw;
         height: 70svh;

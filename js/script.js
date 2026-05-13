@@ -1,25 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // =========================
-    // TOUCH DETECT
+    // TOUCH / CURSOR GUARD
     // =========================
     const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 
     // =========================
-    // CURSOR (ONLY DESKTOP)
+    // CURSOR (DESKTOP ONLY)
     // =========================
     if (!isTouchDevice) {
-
-        const cursorEl = document.querySelector('.cursor');
-        const trailEl = document.querySelector('.cursor-trail');
-
-        if (cursorEl) {
-            cursorEl.remove();
-        }
-
-        if (trailEl) {
-            trailEl.remove();
-        }
 
         const cursor = document.querySelector('.cursor');
         const trail = document.querySelector('.cursor-trail');
@@ -61,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================
-    // IMAGES
+    // PROPERTY DATA
     // =========================
     const imgUrls = {
         Lofts: './images/lofts.jpg',
@@ -82,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sheetClose = document.getElementById('sheetClose');
 
     const imgCache = {};
-
     Object.entries(imgUrls).forEach(([key, src]) => {
         const img = new Image();
         img.src = src;
@@ -92,20 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let isActive = false;
     let hideTimeout = null;
 
-    // =========================
-    // PREVIEW
-    // =========================
     function showPreview(key) {
-
-        if (!previewInner || !preview) {
-            return;
-        }
-
         previewInner.innerHTML = '';
 
         const img = imgCache[key];
-
-        if (img && img.src) {
+        if (img?.src) {
             const el = document.createElement('img');
             el.src = img.src;
             el.alt = key;
@@ -116,26 +95,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function hidePreview() {
-
-        if (preview) {
-            preview.style.opacity = '0';
-        }
+        preview.style.opacity = '0';
     }
 
-    // =========================
-    // BOTTOM SHEET
-    // =========================
     function openSheet(key) {
-
-        if (!sheetImage || !bottomSheet) {
-            return;
-        }
-
         sheetImage.innerHTML = '';
 
         const img = imgCache[key];
 
-        if (img && img.src) {
+        if (img?.src) {
             const el = document.createElement('img');
             el.src = img.src;
             el.alt = key;
@@ -146,24 +114,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function closeSheet() {
-
-        if (bottomSheet) {
-            bottomSheet.classList.remove('open');
-        }
+        bottomSheet.classList.remove('open');
     }
 
-    if (sheetClose) {
-        sheetClose.addEventListener('click', closeSheet);
-    }
+    sheetClose?.addEventListener('click', closeSheet);
 
-    if (bottomSheet) {
-
-        const overlay = bottomSheet.querySelector('.bottom-sheet__overlay');
-
-        if (overlay) {
-            overlay.addEventListener('click', closeSheet);
-        }
-    }
+    bottomSheet?.querySelector('.bottom-sheet__overlay')
+        ?.addEventListener('click', closeSheet);
 
     // =========================
     // BREAKPOINTS
@@ -179,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let mouseX = 0,
             mouseY = 0;
-
         let curX = 0,
             curY = 0;
 
@@ -189,27 +145,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         function loop() {
-
             curX += (mouseX - curX) * 0.1;
             curY += (mouseY - curY) * 0.1;
 
-            if (isActive && preview) {
-
-                const pw = 200;
-                const ph = 280;
-
-                const margin = 20;
-                const offX = 36;
+            if (isActive) {
+                const pw = 200,
+                    ph = 280;
+                const margin = 20,
+                    offX = 36;
 
                 const spaceRight = window.innerWidth - curX - offX;
 
-                let x;
-
-                if (spaceRight >= pw + margin) {
-                    x = curX + offX;
-                } else {
-                    x = curX - pw - offX;
-                }
+                const x = spaceRight >= pw + margin
+                    ? curX + offX
+                    : curX - pw - offX;
 
                 const y = Math.min(
                     Math.max(curY - ph / 2, margin),
@@ -225,46 +174,28 @@ document.addEventListener('DOMContentLoaded', () => {
         loop();
 
         items.forEach(item => {
-
             item.addEventListener('mouseenter', () => {
-
                 clearTimeout(hideTimeout);
 
                 isActive = true;
 
-                if (list) {
-                    list.classList.add('prop-list--hovered');
-                }
-
-                items.forEach(i => {
-                    i.classList.remove('prop-item--hovered');
-                });
-
+                list.classList.add('prop-list--hovered');
+                items.forEach(i => i.classList.remove('prop-item--hovered'));
                 item.classList.add('prop-item--hovered');
 
                 showPreview(item.dataset.key);
             });
         });
 
-        if (list) {
+        list.addEventListener('mouseleave', () => {
+            hideTimeout = setTimeout(() => {
+                isActive = false;
+                hidePreview();
 
-            list.addEventListener('mouseleave', () => {
-
-                hideTimeout = setTimeout(() => {
-
-                    isActive = false;
-
-                    hidePreview();
-
-                    list.classList.remove('prop-list--hovered');
-
-                    items.forEach(i => {
-                        i.classList.remove('prop-item--hovered');
-                    });
-
-                }, 120);
-            });
-        }
+                list.classList.remove('prop-list--hovered');
+                items.forEach(i => i.classList.remove('prop-item--hovered'));
+            }, 120);
+        });
     }
 
     // =========================
@@ -273,36 +204,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isTablet) {
 
         items.forEach(item => {
-
             item.addEventListener('mouseenter', () => {
 
-                if (list) {
-                    list.classList.add('prop-list--hovered');
-                }
+                list.classList.add('prop-list--hovered');
 
-                items.forEach(i => {
-                    i.classList.remove('prop-item--hovered');
-                });
-
+                items.forEach(i => i.classList.remove('prop-item--hovered'));
                 item.classList.add('prop-item--hovered');
 
                 showPreview(item.dataset.key);
             });
         });
 
-        if (list) {
+        list.addEventListener('mouseleave', () => {
+            hidePreview();
 
-            list.addEventListener('mouseleave', () => {
-
-                hidePreview();
-
-                list.classList.remove('prop-list--hovered');
-
-                items.forEach(i => {
-                    i.classList.remove('prop-item--hovered');
-                });
-            });
-        }
+            list.classList.remove('prop-list--hovered');
+            items.forEach(i => i.classList.remove('prop-item--hovered'));
+        });
     }
 
     // =========================
@@ -311,19 +229,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isMobile) {
 
         items.forEach(item => {
-
             item.addEventListener('click', () => {
 
                 const key = item.dataset.key;
 
-                if (list) {
-                    list.classList.add('prop-list--hovered');
-                }
+                list.classList.add('prop-list--hovered');
 
-                items.forEach(i => {
-                    i.classList.remove('prop-item--hovered');
-                });
-
+                items.forEach(i => i.classList.remove('prop-item--hovered'));
                 item.classList.add('prop-item--hovered');
 
                 openSheet(key);
@@ -339,20 +251,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isDesktop) {
 
         const cards = document.querySelector('#cardsScroll');
-
         if (cards) {
 
             const cardItems = gsap.utils.toArray('#cardsScroll .card__scroll');
 
-            const totalWidth = () => {
-                return cardItems.reduce((acc, card) => {
-                    return acc + card.offsetWidth;
-                }, 0) - window.innerWidth;
-            };
+            const totalWidth = () =>
+                cardItems.reduce((acc, card) => acc + card.offsetWidth, 0) - window.innerWidth;
 
-            gsap.set(cards, {
-                x: -totalWidth()
-            });
+            gsap.set(cards, { x: -totalWidth() });
 
             gsap.to(cards, {
                 x: 0,
@@ -374,23 +280,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const menu = document.querySelector('.menu');
 
     if (burger && menu) {
-
         burger.addEventListener('click', () => {
-
             burger.classList.toggle('is-active');
-
             burger.setAttribute(
                 'aria-expanded',
                 burger.classList.contains('is-active')
             );
-
             menu.classList.toggle('is-open');
         });
 
         document.querySelectorAll('.menu__link').forEach(link => {
-
             link.addEventListener('click', () => {
-
                 burger.classList.remove('is-active');
                 menu.classList.remove('is-open');
             });
