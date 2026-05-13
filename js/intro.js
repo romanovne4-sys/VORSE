@@ -94,9 +94,9 @@
         if (logo) gsap.set(logo, { opacity: 0, y: -10 });
         if (menu) gsap.set(menu, { opacity: 0, y: -10 });
         if (burger) gsap.set(burger, { opacity: 0, y: -10 });
-        if (title1) gsap.set(title1, { opacity: 0, x: 50 });
-        if (title2) gsap.set(title2, { opacity: 0, x: 50 });
-        if (desc) gsap.set(desc, { opacity: 0, y: 14 });
+        if (title1) gsap.set(title1, { opacity: 0, x: 80 });
+        if (title2) gsap.set(title2, { opacity: 0, x: 80 });
+        if (desc) gsap.set(desc, { opacity: 0 });
 
         if (isMobile) {
             gsap.set(mid, {
@@ -190,9 +190,12 @@
         tl.to(logo, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=1.5');
         tl.to(menu, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<+0.1');
         tl.to(burger, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '<');
-        tl.to(title1, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<-0.2');
-        tl.to(title2, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, '<+0.15');
-        tl.to(desc, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '<+0.1');
+        // title1 появляется справа
+        tl.to(title1, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, '<-0.2');
+        // title2 — чуть позже, тоже справа
+        tl.to(title2, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, '<+0.25');
+        // desc — только fade, без смещения, после title2
+        tl.to(desc, { opacity: 1, duration: 0.8, ease: 'power2.out' }, '<+0.35');
     }
 
     if (document.readyState === 'loading') {
