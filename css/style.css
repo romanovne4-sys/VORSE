@@ -1,6 +1,5 @@
 html {
     box-sizing: border-box;
-    overflow-x: hidden;
     /* scroll-behavior: smooth; */
 }
 
@@ -48,6 +47,7 @@ body {
     color: #fff;
     line-height: 1.2;
     letter-spacing: 0.02em;
+    overflow-x: hidden;
     cursor: none;
 }
 
