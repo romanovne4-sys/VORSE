@@ -78,10 +78,13 @@ overlay.style.overflow = 'hidden';
         } else {
             gsap.set(mid, {
                 opacity: 0,
+                scaleY: 0,
+                transformOrigin: 'bottom center',
                 xPercent: -50,
                 yPercent: -50,
                 left: "50%",
                 top: "50%"
+                
             });
 
             gsap.set(left, {
@@ -128,6 +131,7 @@ overlay.style.overflow = 'hidden';
         // MID
         tl.to(mid, {
             opacity: 1,
+            scaleY: 1,
             y: 0,
             duration: 1.2,
             ease: 'power3.out'
@@ -200,11 +204,47 @@ overlay.style.overflow = 'hidden';
             }, 'mobileExit');
 
         } else {
-            tl.to([mid, left, right, line], {
-                opacity: 0,
-                duration: 0.4,
-                ease: 'power2.in'
-            }, '+=0.4');
+           tl.addLabel('desktopExit');
+
+    // MID — схлопывание в центр + лёгкий уход вверх
+    tl.to(mid, {
+        scale: 0,
+        y: -20,
+        opacity: 0,
+        transformOrigin: 'center center',
+        duration: 0.7,
+        ease: 'power2.in'
+    }, 'desktopExit');
+
+    // LEFT — сверху вниз + в центр (вправо)
+    tl.to(left, {
+        scale: 0,
+        x: 40,
+        y: -30,
+        opacity: 0,
+        transformOrigin: 'top center',
+        duration: 0.7,
+        ease: 'power2.in'
+    }, 'desktopExit+=0.05');
+
+    // RIGHT — снизу вверх + в центр (влево)
+    tl.to(right, {
+        scale: 0,
+        x: -40,
+        y: 30,
+        opacity: 0,
+        transformOrigin: 'bottom center',
+        duration: 0.7,
+        ease: 'power2.in'
+    }, 'desktopExit+=0.1');
+
+    // line
+    tl.to(line, {
+        opacity: 0,
+        scaleX: 0,
+        duration: 0.4,
+        ease: 'power2.in'
+    }, 'desktopExit');
         }
 
         tl.to(overlay, {
