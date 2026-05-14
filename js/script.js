@@ -423,37 +423,39 @@ cards.forEach(card => {
 });
 
 //scroll
-let ease = window.pageYOffset;
-let target = ease;
-let velocity = 0;
-const friction = 0.92;
-const maxSpeed = 80;
+// scroll
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-window.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  velocity += e.deltaY * 0.15;
-  velocity = Math.max(Math.min(velocity, maxSpeed), -maxSpeed);
-}, { passive: false });
+if (!isTouchDevice) {
+  let ease = window.pageYOffset;
+  let target = ease;
+  let velocity = 0;
+  const friction = 0.92;
+  const maxSpeed = 80;
 
-window.addEventListener('scroll', () => {
-  const native = window.pageYOffset;
-  if (Math.abs(native - ease) > 5) {
-    ease = native;
-    target = native;
-    velocity = 0;
-  }
-});
+  window.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    velocity += e.deltaY * 0.15;
+    velocity = Math.max(Math.min(velocity, maxSpeed), -maxSpeed);
+  }, { passive: false });
 
-(function loop() {
-  const maxScroll = document.body.scrollHeight - window.innerHeight;
+  window.addEventListener('scroll', () => {
+    const native = window.pageYOffset;
+    if (Math.abs(native - ease) > 5) {
+      ease = native;
+      target = native;
+      velocity = 0;
+    }
+  });
 
-  velocity *= friction;
-  target += velocity;
-  target = Math.max(0, Math.min(target, maxScroll));
-
-  ease += (target - ease) * 0.12;
-  if (Math.abs(target - ease) < 0.5) ease = target;
-
-  window.scrollTo(0, ease);
-  requestAnimationFrame(loop);
-})();
+  (function loop() {
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    velocity *= friction;
+    target += velocity;
+    target = Math.max(0, Math.min(target, maxScroll));
+    ease += (target - ease) * 0.12;
+    if (Math.abs(target - ease) < 0.5) ease = target;
+    window.scrollTo(0, ease);
+    requestAnimationFrame(loop);
+  })();
+}
