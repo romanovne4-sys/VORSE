@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const imgUrls = {
-        Lofts: './images/lofts.jpg',
-        Penthouses: './images/penthouse.jpg',
-        Villas: './images/villa.jpg',
-        Mansions: './images/mansions.jpg',
-        Estates: './images/estate.jpg',
+        Lofts: './images/lofts.webp',
+        Penthouses: './images/penthouse.webp',
+        Villas: './images/villa.webp',
+        Mansions: './images/mansions.webp',
+        Estates: './images/estate.webp',
     };
 
     const list = document.getElementById('propList');

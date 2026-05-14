@@ -71,7 +71,7 @@ body.page-home:not(.ready) .logo {
 }
 
 .header {
-    background-image: url(../images/hero-bg.jpg);
+    background-image: url(../images/hero-bg.webp);
     /*заглушка в случаем если чей то браузер не поддерживает image-set */
     /* background-image: image-set( url('../images/hero-bg.avif') type('image/avif'), url('../images/hero-bg.webp') type('image/webp'), url('../images/header-bg.jpg') type('image/jpeg')); */
     background-size: cover;

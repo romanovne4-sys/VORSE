@@ -9,13 +9,13 @@ document.body.classList.add('ready');
         overlay.innerHTML = `
             <div class="intro-cards">
                 <div class="intro-card intro-card--left">
-                    <img src="images/intro-left.jpg" alt="">
+                    <img src="images/intro-left.webp" alt="">
                 </div>
                 <div class="intro-card intro-card--mid">
-                    <img src="images/intro-mid.jpg" alt="">
+                    <img src="images/intro-mid.webp" alt="">
                 </div>
                 <div class="intro-card intro-card--right">
-                    <img src="images/intro-right.jpg" alt="">
+                    <img src="images/intro-right.webp" alt="">
                 </div>
             </div>
 
@@ -141,7 +141,9 @@ overlay.style.overflow = 'hidden';
             tl.to(line, { scaleX: 0.3, duration: 0.5, ease: 'power2.out' }, '<+0.2');
 
             tl.to(right, {
+
                 opacity: 1,
+                scaleY: 1,
                 y: 0,
                 duration: 1.2,
                 ease: 'power3.out'
@@ -153,6 +155,7 @@ overlay.style.overflow = 'hidden';
 
             tl.to(left, {
                 opacity: 1,
+                scaleY: 1,
                 y: 0,
                 duration: 1.2,
                 ease: 'power3.out'
@@ -212,6 +215,7 @@ overlay.style.overflow = 'hidden';
                 document.body.style.overflow = '';
                 document.documentElement.style.overflowX = '';
                 document.body.style.overflowX = '';
+            
                 overlay.remove();
             }
         }, '-=0.1');
@@ -219,6 +223,8 @@ overlay.style.overflow = 'hidden';
         // HEADER + UI
         if (header && !isMobile) {
             tl.to(header, { scale: 1, duration: 1.8, ease: 'power3.out' }, '+=0');
+
+            tl.set(header, { clearProps: "transform" });
         }
 
         const uiStart = isMobile ? '+=0' : '-=1.4';
