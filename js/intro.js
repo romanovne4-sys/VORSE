@@ -53,13 +53,18 @@ document.body.classList.add('ready');
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
 
+        // 🔥 FIX horizontal scroll
+        document.documentElement.style.overflowX = 'hidden';
+        document.body.style.overflowX = 'hidden';
+
         // INIT
         if (isMobile) {
             gsap.set(mid, {
                 opacity: 0,
                 y: 30,
                 xPercent: -50,
-                yPercent: -50
+                yPercent: -50,
+                willChange: "transform"
             });
 
             gsap.set([left, right], {
@@ -168,7 +173,7 @@ document.body.classList.add('ready');
             }, '+=0.2');
         }
 
-        // EXIT (ЖЁСТКАЯ СИНХРОНИЗАЦИЯ БЕЗ ЗАДЕРЖЕК)
+        // EXIT (синхрон + фикс overflow)
         if (isMobile) {
 
             tl.addLabel('mobileExit');
@@ -177,7 +182,8 @@ document.body.classList.add('ready');
                 scale: 0,
                 opacity: 0,
                 duration: 0.5,
-                ease: 'power2.in'
+                ease: 'power2.in',
+                willChange: "transform"
             }, 'mobileExit');
 
             tl.to(line, {
@@ -200,6 +206,8 @@ document.body.classList.add('ready');
             onComplete: () => {
                 document.documentElement.style.overflow = '';
                 document.body.style.overflow = '';
+                document.documentElement.style.overflowX = '';
+                document.body.style.overflowX = '';
                 overlay.remove();
             }
         }, '-=0.1');

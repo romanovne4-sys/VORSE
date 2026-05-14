@@ -127,6 +127,7 @@
         width: 100vw;
         height: 70svh;
         top: 50%;
+        will-change: transform;
         /* translateY(-50%) ставит GSAP через yPercent: -50 */
     }
 }
