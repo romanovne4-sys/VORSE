@@ -55,10 +55,12 @@ body.no-scroll {
     overflow: hidden;
 }
 
-body:not(.ready) .header,
-body:not(.ready) .menu,
-body:not(.ready) .logo {
+/* для главной (интро) */
+body.page-home:not(.ready) .header,
+body.page-home:not(.ready) .menu,
+body.page-home:not(.ready) .logo {
     opacity: 0;
+    pointer-events: none;
 }
 
 .container {

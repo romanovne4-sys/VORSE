@@ -1,4 +1,5 @@
 document.body.classList.add('ready');
+
 (function() {
     'use strict';
 
@@ -58,15 +59,17 @@ document.body.classList.add('ready');
         // =========================
 
         if (isMobile) {
-            // MOBILE — БЕЗ SCALE
-            gsap.set([mid, left, right], {
+
+            gsap.set(mid, {
                 opacity: 0,
-                y: 30,
-                xPercent: (i, el) => el === mid ? -50 : 0,
-                yPercent: (i, el) => el === mid ? -50 : 0
+                xPercent: -50,
+                yPercent: -50,
+                left: "50%",
+                top: "50%"
             });
+
         } else {
-            // DESKTOP — можно оставить более "кинематографично"
+
             gsap.set(mid, {
                 opacity: 0,
                 xPercent: -50,
@@ -100,8 +103,8 @@ document.body.classList.add('ready');
         if (burger) gsap.set(burger, { opacity: 0, y: -10 });
 
         if (isMobile) {
-            if (title1) gsap.set(title1, { opacity: 0, y: 20 });
-            if (title2) gsap.set(title2, { opacity: 0, y: 20 });
+            if (title1) gsap.set(title1, { opacity: 0, x: 30 });
+            if (title2) gsap.set(title2, { opacity: 0, x: 30 });
         } else {
             if (title1) gsap.set(title1, { opacity: 0, x: 50 });
             if (title2) gsap.set(title2, { opacity: 0, x: 50 });
@@ -110,20 +113,12 @@ document.body.classList.add('ready');
         if (desc) gsap.set(desc, { opacity: 0, y: 14 });
 
         // =========================
-        // IMAGES (без изменений)
+        // IMAGES
         // =========================
 
         gsap.set([midImg, leftImg, rightImg], {
             scale: 5.12,
             transformOrigin: 'bottom center'
-        });
-
-        const LINE_PADDING = 0;
-
-        gsap.set(line, {
-            scaleX: 0,
-            x: LINE_PADDING,
-            width: `calc(100% - ${LINE_PADDING * 2}px)`
         });
 
         // =========================
@@ -136,44 +131,123 @@ document.body.classList.add('ready');
         tl.to(mid, {
             opacity: 1,
             y: 0,
-            scaleY: isMobile ? undefined : 1,
             duration: 1.2,
             ease: 'power3.out'
         }, '+=0.3');
 
-        tl.to(midImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
-        tl.to(line, { scaleX: 0.3, duration: 0.5, ease: 'power2.out' }, '<+0.2');
-
-        // RIGHT
-        tl.to(right, {
-            opacity: 1,
-            y: 0,
-            scaleY: isMobile ? undefined : 1,
-            duration: 1.2,
+        tl.to(midImg, {
+            scale: 1,
+            duration: 1.6,
             ease: 'power3.out'
-        }, '+=0.3');
+        }, '<');
 
-        tl.to(rightImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
-        tl.to(line, { scaleX: 0.65, duration: 0.5, ease: 'power2.out' }, '<+0.2');
+        tl.to(line, {
+            scaleX: isMobile ? 1 : 0.3,
+            duration: 0.5,
+            ease: 'power2.out'
+        }, '<+0.2');
 
-        // LEFT
-        tl.to(left, {
-            opacity: 1,
-            y: 0,
-            scaleY: isMobile ? undefined : 1,
-            duration: 1.2,
-            ease: 'power3.out'
-        }, '+=0.5');
+        // RIGHT (desktop only)
+        if (!isMobile) {
 
-        tl.to(leftImg, { scale: 1, duration: 1.6, ease: 'power3.out' }, '<');
-        tl.to(line, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, '<+0.2');
+            tl.to(right, {
+                opacity: 1,
+                y: 0,
+                scaleY: 1,
+                duration: 1.2,
+                ease: 'power3.out'
+            }, '+=0.3');
 
+            tl.to(rightImg, {
+                scale: 1,
+                duration: 1.6,
+                ease: 'power3.out'
+            }, '<');
+
+            tl.to(line, {
+                scaleX: 0.65,
+                duration: 0.5,
+                ease: 'power2.out'
+            }, '<+0.2');
+        }
+
+        // LEFT (desktop only)
+        if (!isMobile) {
+
+            tl.to(left, {
+                opacity: 1,
+                y: 0,
+                scaleY: 1,
+                duration: 1.2,
+                ease: 'power3.out'
+            }, '+=0.5');
+
+            tl.to(leftImg, {
+                scale: 1,
+                duration: 1.6,
+                ease: 'power3.out'
+            }, '<');
+
+            tl.to(line, {
+                scaleX: 1,
+                duration: 0.4,
+                ease: 'power2.out'
+            }, '<+0.2');
+        }
+
+        // =========================
         // EXIT
-        tl.to([mid, left, right, line], {
-            opacity: 0,
-            duration: 0.4,
-            ease: 'power2.in'
-        }, '+=0.6');
+        // =========================
+        if (isMobile) {
+
+            tl.to(mid, {
+                scaleY: 0,
+                transformOrigin: 'center center',
+                opacity: 0,
+                duration: 0.85,
+                ease: 'power4.inOut'
+            }, '+=0.6');
+        
+            tl.to(midImg, {
+                scale: 1.05,
+                duration: 0.85,
+                ease: 'power4.inOut'
+            }, '<');
+        
+            tl.to(line, {
+                scaleX: 0,
+                duration: 0.5,
+                ease: 'power2.inOut'
+            }, '<');
+        
+        }
+      else {
+
+            tl.to([left, mid], {
+                scaleY: 0,
+                transformOrigin: 'top center',
+                duration: 0.9,
+                ease: 'expo.inOut'
+            }, '+=0.6');
+
+            tl.to(right, {
+                scaleY: 0,
+                transformOrigin: 'bottom center',
+                duration: 0.9,
+                ease: 'expo.inOut'
+            }, '<');
+
+            tl.to(line, {
+                scaleX: 0,
+                duration: 0.45,
+                ease: 'power2.inOut'
+            }, '<');
+
+            tl.to([mid, left, right], {
+                opacity: 0,
+                duration: 0.15
+            }, '-=0.15');
+        }
 
         tl.to(overlay, {
             opacity: 0,
@@ -185,9 +259,16 @@ document.body.classList.add('ready');
             }
         }, '-=0.1');
 
+        // =========================
         // HEADER + UI
+        // =========================
+
         if (header && !isMobile) {
-            tl.to(header, { scale: 1, duration: 1.8, ease: 'power3.out' }, '+=0');
+            tl.to(header, {
+                scale: 1,
+                duration: 1.8,
+                ease: 'power3.out'
+            }, '+=0');
         }
 
         const uiStart = isMobile ? '+=0' : '-=1.4';
@@ -196,13 +277,8 @@ document.body.classList.add('ready');
         if (menu) tl.to(menu, { opacity: 1, y: 0, duration: 0.6 }, '<+0.1');
         if (burger) tl.to(burger, { opacity: 1, y: 0, duration: 0.6 }, '<');
 
-        if (isMobile) {
-            if (title1) tl.to(title1, { opacity: 1, y: 0, duration: 0.8 }, '<+0.1');
-            if (title2) tl.to(title2, { opacity: 1, y: 0, duration: 0.8 }, '<+0.15');
-        } else {
-            if (title1) tl.to(title1, { opacity: 1, x: 0, duration: 0.8 }, '<+0.1');
-            if (title2) tl.to(title2, { opacity: 1, x: 0, duration: 0.8 }, '<+0.15');
-        }
+        if (title1) tl.to(title1, { opacity: 1, x: 0, duration: 0.8 }, '<+0.1');
+        if (title2) tl.to(title2, { opacity: 1, x: 0, duration: 0.8 }, '<+0.15');
 
         if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.8 }, '<+0.1');
     }
@@ -212,6 +288,5 @@ document.body.classList.add('ready');
     } else {
         runIntro();
     }
-
 
 })();
