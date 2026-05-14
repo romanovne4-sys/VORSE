@@ -1018,6 +1018,7 @@ body.page-home:not(.ready) .logo {
     pointer-events: none;
     z-index: 999;
     visibility: hidden;
+    overflow: hidden;
     /* добавить */
 }
 
