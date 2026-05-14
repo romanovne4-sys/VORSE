@@ -1017,6 +1017,8 @@ body.page-home:not(.ready) .logo {
     inset: 0;
     pointer-events: none;
     z-index: 999;
+    visibility: hidden;
+    /* добавить */
 }
 
 .bottom-sheet__overlay {
@@ -1061,6 +1063,8 @@ body.page-home:not(.ready) .logo {
 
 .bottom-sheet.open {
     pointer-events: auto;
+    visibility: visible;
+    /* добавить */
 }
 
 .bottom-sheet.open .bottom-sheet__overlay {
