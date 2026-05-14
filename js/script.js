@@ -69,6 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeSheet() {
         bottomSheet.classList.remove('open');
+        list.classList.remove('prop-list--hovered');        // добавить
+        items.forEach(i => i.classList.remove('prop-item--hovered')); // добавить
     }
 
     if (sheetClose) {
