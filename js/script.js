@@ -457,7 +457,13 @@ if (!isTouchDevice) {
     target = Math.max(0, Math.min(target, maxScroll));
     ease += (target - ease) * 0.12;
     if (Math.abs(target - ease) < 0.5) ease = target;
+
     window.scrollTo(0, ease);
+    if (Math.abs(velocity) > 0.1 || Math.abs(target - ease) > 0.5) {
+      window.scrollTo(0, ease);
+  }
+  
     requestAnimationFrame(loop);
+
   })();
 }
