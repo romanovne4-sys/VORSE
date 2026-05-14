@@ -23,9 +23,13 @@ document.body.classList.add('ready');
                 <div class="intro-line__inner"></div>
             </div>
         `;
+        overlay.style.position = 'fixed';
+overlay.style.inset = '0';
+overlay.style.overflow = 'hidden';
 
         document.body.insertBefore(overlay, document.body.firstChild);
         return overlay;
+        
     }
 
     function runIntro() {
