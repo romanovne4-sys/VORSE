@@ -633,7 +633,7 @@
         /* page blackwood */
 
         .photo-strip-inner {
-
+            height: auto;
             gap: 20px;
         }
 
