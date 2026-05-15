@@ -1,4 +1,5 @@
 document.body.classList.add('ready');
+
 (function() {
     'use strict';
 
@@ -23,13 +24,13 @@ document.body.classList.add('ready');
                 <div class="intro-line__inner"></div>
             </div>
         `;
+
         overlay.style.position = 'fixed';
-overlay.style.inset = '0';
-overlay.style.overflow = 'hidden';
+        overlay.style.inset = '0';
+        overlay.style.overflow = 'hidden';
 
         document.body.insertBefore(overlay, document.body.firstChild);
         return overlay;
-        
     }
 
     function runIntro() {
@@ -56,8 +57,6 @@ overlay.style.overflow = 'hidden';
 
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
-
-        // 🔥 FIX horizontal scroll
         document.documentElement.style.overflowX = 'hidden';
         document.body.style.overflowX = 'hidden';
 
@@ -71,9 +70,7 @@ overlay.style.overflow = 'hidden';
                 willChange: "transform"
             });
 
-            gsap.set([left, right], {
-                opacity: 0
-            });
+            gsap.set([left, right], { opacity: 0 });
 
         } else {
             gsap.set(mid, {
@@ -84,7 +81,6 @@ overlay.style.overflow = 'hidden';
                 yPercent: -50,
                 left: "50%",
                 top: "50%"
-                
             });
 
             gsap.set(left, {
@@ -141,11 +137,9 @@ overlay.style.overflow = 'hidden';
 
         // LINE + LEFT/RIGHT
         if (!isMobile) {
-
             tl.to(line, { scaleX: 0.3, duration: 0.5, ease: 'power2.out' }, '<+0.2');
 
             tl.to(right, {
-
                 opacity: 1,
                 scaleY: 1,
                 y: 0,
@@ -170,7 +164,6 @@ overlay.style.overflow = 'hidden';
             tl.to(line, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, '<+0.2');
 
         } else {
-
             tl.to(line, {
                 scaleX: 1,
                 duration: 0.8,
@@ -178,73 +171,72 @@ overlay.style.overflow = 'hidden';
             }, '<+0.2');
 
             tl.to(line, {
-                scaleX: 0,
+                
                 duration: 0.35,
                 ease: 'power2.in'
             }, '+=0.2');
+
+            tl.set(line, {
+                scaleX: 1
+            });
         }
 
-        // EXIT (синхрон + фикс overflow)
+    
         if (isMobile) {
 
             tl.addLabel('mobileExit');
 
             tl.to(mid, {
-                scale: 0,
+             
                 opacity: 0,
-                duration: 0.5,
-                ease: 'power2.in',
-                willChange: "transform"
+           
+                duration: 0.7,
+                ease: 'power3.in'
             }, 'mobileExit');
 
             tl.to(line, {
                 opacity: 0,
+               
                 duration: 0.5,
                 ease: 'power2.in'
             }, 'mobileExit');
 
         } else {
-           tl.addLabel('desktopExit');
 
-    // MID — схлопывание в центр + лёгкий уход вверх
-    tl.to(mid, {
-        scale: 0,
-        y: -20,
-        opacity: 0,
-        transformOrigin: 'center center',
-        duration: 0.7,
-        ease: 'power2.in'
-    }, 'desktopExit');
+            tl.addLabel('desktopExit');
 
-    // LEFT — сверху вниз + в центр (вправо)
-    tl.to(left, {
-        scale: 0,
-        x: 40,
-        y: -30,
-        opacity: 0,
-        transformOrigin: 'top center',
-        duration: 0.7,
-        ease: 'power2.in'
-    }, 'desktopExit+=0.05');
+            tl.to(mid, {
+                scaleY: 0,
+                opacity: 0,
+                transformOrigin: 'center bottom',
+                duration: 0.8,
+                ease: 'power3.in'
+            }, 'desktopExit');
 
-    // RIGHT — снизу вверх + в центр (влево)
-    tl.to(right, {
-        scale: 0,
-        x: -40,
-        y: 30,
-        opacity: 0,
-        transformOrigin: 'bottom center',
-        duration: 0.7,
-        ease: 'power2.in'
-    }, 'desktopExit+=0.1');
+            tl.to(left, {
+                scaleY: 0,
+                opacity: 0,
+                transformOrigin: 'center bottom',
+                duration: 0.8,
+                ease: 'power3.in'
+            }, 'desktopExit+=0.05');
 
-    // line
-    tl.to(line, {
-        opacity: 0,
-        scaleX: 0,
-        duration: 0.4,
-        ease: 'power2.in'
-    }, 'desktopExit');
+         
+            tl.to(right, {
+                scaleY: 0,
+                opacity: 0,
+                transformOrigin: 'center top',
+                duration: 0.8,
+                ease: 'power3.in'
+            }, 'desktopExit+=0.1');
+
+            // LINE — закрытие
+            tl.to(line, {
+                scaleX: 0,
+                opacity: 0,
+                duration: 0.5,
+                ease: 'power2.in'
+            }, 'desktopExit');
         }
 
         tl.to(overlay, {
@@ -255,7 +247,6 @@ overlay.style.overflow = 'hidden';
                 document.body.style.overflow = '';
                 document.documentElement.style.overflowX = '';
                 document.body.style.overflowX = '';
-            
                 overlay.remove();
             }
         }, '-=0.1');
@@ -263,7 +254,6 @@ overlay.style.overflow = 'hidden';
         // HEADER + UI
         if (header && !isMobile) {
             tl.to(header, { scale: 1, duration: 1.8, ease: 'power3.out' }, '+=0');
-
             tl.set(header, { clearProps: "transform" });
         }
 
