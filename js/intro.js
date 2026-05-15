@@ -177,8 +177,8 @@ document.body.classList.add('ready');
             }, '+=0.2');
 
             tl.set(line, {
-                scaleX: 1
-            });
+    scaleX: 1
+});
         }
 
     

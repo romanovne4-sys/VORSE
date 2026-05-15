@@ -78,12 +78,13 @@ if (burger && menu) {
 
 //  page-blackwood 
 //  код для картинок, чтоб при клике по картинке - она становилась на беграунд
+// пока коменирую, потому что нету картинок
 
-document.querySelectorAll('.photo-strip').forEach(img => {
-    img.addEventListener('click', () => {
-        document.querySelector('.header__apartament').style.backgroundImage = `url(${img.src})`;
-    });
-});
+// document.querySelectorAll('.photo-strip').forEach(img => {
+//     img.addEventListener('click', () => {
+//         document.querySelector('.header__apartament').style.backgroundImage = `url(${img.src})`;
+//     });
+// });
 
 // для изменения номера секции с 3 на 2
 //  (бо на 1024 меняется колво секций на странице blackwood, убирается карта)

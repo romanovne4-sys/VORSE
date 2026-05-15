@@ -1,6 +1,12 @@
 html {
     box-sizing: border-box;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
+}
+
+@media (max-width: 600px) {
+    html {
+        scroll-behavior: smooth;
+    }
 }
 
 *,
