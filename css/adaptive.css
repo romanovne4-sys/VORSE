@@ -639,7 +639,8 @@
 
         .photo-strip {
             width: 100px;
-            height: auto
+            height: auto;
+            height: 70px;
         }
 
     }
