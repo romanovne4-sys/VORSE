@@ -427,6 +427,7 @@
             order: 3;
             align-self: flex-start;
             gap: 33px;
+            display: none;
         }
     }
 
