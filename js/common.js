@@ -93,7 +93,7 @@ if (
 ) {
     document.querySelector('.contact__number').textContent = '02';
 }
-// page map,search (кнопка показа/скрытия фильтров (584px)
+// page map, page search (кнопка показа/скрытия фильтров (584px)
 
 const btn = document.querySelector('.hide-filters-btn');
 const filters = document.querySelector('.filters');
@@ -107,3 +107,16 @@ btn.addEventListener('click', () => {
 
     btn.textContent = isOpen ? 'HIDE FILTERS' : 'SHOW FILTERS';
 });
+
+// page search кнопка показа скрытия карты
+const mapbtn = document.querySelector('.map-btn-search');
+const mapsearch = document.querySelector('.search__map');
+
+let mapOpen = false;
+
+mapbtn.addEventListener('click', () => {
+    isOpen = !isOpen;
+
+    mapsearch.classList.toggle('active', isOpen);
+
+    mapbtn.textContent = isOpen ? 'HIDE MAP' : 'SHOW MAP';});
