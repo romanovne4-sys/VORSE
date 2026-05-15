@@ -427,7 +427,7 @@
             order: 3;
             align-self: flex-start;
             gap: 33px;
-            display: none;
+
         }
     }
 
@@ -512,6 +512,7 @@
     }
 
     @media (max-width: 584px) {
+
         .page__title {
             font-size: 90px;
         }
@@ -630,4 +631,15 @@
 
 
         /* page blackwood */
+
+        .photo-strip-inner {
+            justify-content: flex-start;
+            gap: 20px;
+        }
+
+        .photo-strip {
+            width: 100px;
+            height: auto
+        }
+
     }
