@@ -1404,7 +1404,7 @@ option {
 }
 
 .photo-strip {
-    width: clamp(128px, 16vw, 289px);
+    width: clamp(100px, 16vw, 289px);
     aspect-ratio: 289 / 195;
     object-fit: cover;
     display: block;

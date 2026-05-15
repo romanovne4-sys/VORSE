@@ -633,14 +633,13 @@
         /* page blackwood */
 
         .photo-strip-inner {
-            justify-content: flex-start;
+
             gap: 20px;
         }
 
         .photo-strip {
-            width: 100px;
-            height: auto;
-            height: 70px;
+            /* width: 100%;
+            max-width: 289px; */
         }
 
     }
