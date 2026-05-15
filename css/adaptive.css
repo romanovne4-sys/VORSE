@@ -632,8 +632,12 @@
 
         /* page blackwood */
 
+        .header__content-apartament {
+            margin-top: 0;
+        }
+
         .photo-strip-inner {
-            height: auto;
+
             gap: 20px;
         }
 
