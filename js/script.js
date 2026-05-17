@@ -462,7 +462,7 @@ if (!isTouchDevice) {
     if (Math.abs(velocity) > 0.1 || Math.abs(target - ease) > 0.5) {
       window.scrollTo(0, ease);
   }
-  
+
     requestAnimationFrame(loop);
 
   })();
